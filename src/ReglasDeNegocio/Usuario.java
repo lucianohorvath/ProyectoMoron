@@ -4,6 +4,7 @@ package ReglasDeNegocio;
 public class Usuario {
     private int id;
     private String nombre;
+    private String apellido;
     private String funcion;
     private int rol;
 
@@ -23,6 +24,14 @@ public class Usuario {
         this.nombre = nombre;
     }
 
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+    
     public String getFuncion() {
         return funcion;
     }
@@ -39,12 +48,17 @@ public class Usuario {
         this.rol = rol;
     }
     
-    public Usuario(int id, String nombre, String funcion, int rol){
+    public Usuario(int id, String nombre, String apellido, String funcion, int rol){
         this.id = id;
         this.nombre = nombre;
+        this.apellido = apellido;
         this.funcion = funcion;
         this.rol = rol;
     }
     
+   
+    public String toString(){
+        return ("El usuario de ID: " + id + " se llama " + nombre + " " + apellido + " y su rol es: " + rol );
+    }
     
 }
