@@ -5,6 +5,12 @@
  */
 package InterfazConUsuario;
 
+import CapaDeDatos.AccesoADatos;
+import ReglasDeNegocio.Administradora;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Alfa02
@@ -13,13 +19,16 @@ public class VerProveedores extends javax.swing.JFrame {
 
     private static int operacion;
     private static int idProveedor;
-    
+    private static Administradora admin;
+        
     /**
      * Creates new form VerProveedores
      */
-    public VerProveedores(int op) {
+    public VerProveedores(int op, Administradora admin) {
         initComponents();
         operacion = op;
+        this.admin = admin;
+        cargarTabla();
     }
 
     /**
@@ -43,21 +52,7 @@ public class VerProveedores extends javax.swing.JFrame {
 
         jTablaProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "ID Proveedor", "Nombre", "Dirección", "Teléfono", "Email"
@@ -130,12 +125,31 @@ public class VerProveedores extends javax.swing.JFrame {
         idProveedor = ????
         como consigo el valor seleccionado en la tabla??
         */
-        ABMProveedores abmProv = new ABMProveedores(operacion, idProveedor);
+        ABMProveedores abmProv = new ABMProveedores(operacion, idProveedor, admin);
         this.dispose();
         abmProv.setVisible(true);
     }//GEN-LAST:event_jBSeleccionarActionPerformed
 
     
+    private void cargarTabla(){
+        DefaultTableModel modelo = (DefaultTableModel)jTablaProveedores.getModel();     //lo casteo porque el modelo que se edita gráficamente es un TableModel. Sino, tendria que crear un DefaultTableModel y darle forma (columnas, filas) mediante código.
+        
+        ResultSet rs;
+        AccesoADatos a = new AccesoADatos();
+        
+        try{
+            rs = a.leerTablaProveedores();
+            }
+        catch(SQLException ex){
+            System.out.println("Error lalalaa");
+        }
+        
+        Object[] fila = {10,"pepe","ala","aasd","aqwew"};
+        modelo.addRow(fila);
+       
+        
+        
+    };
     
     
     /**
@@ -168,7 +182,8 @@ public class VerProveedores extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VerProveedores(operacion).setVisible(true);
+                new VerProveedores(operacion, admin).setVisible(true);
+                 
             }
         });
     }

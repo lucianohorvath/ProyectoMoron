@@ -1,9 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package InterfazConUsuario;
+
+import ReglasDeNegocio.Administradora;
+import ReglasDeNegocio.Proveedor;
 
 /**
  *
@@ -13,12 +11,14 @@ public class ABMProveedores extends javax.swing.JFrame {
 
     private static int operacion;
     private static int idProveedor;
+    private static Administradora admin;
     
-    public ABMProveedores(int op, int idProv) {
+    public ABMProveedores(int op, int idProv, Administradora admin) {
         initComponents();
         operacion = op;
         idProveedor = idProv;
         modificarBotones(operacion);
+        this.admin = admin;
     }
 
     /**
@@ -149,6 +149,11 @@ public class ABMProveedores extends javax.swing.JFrame {
         jBAlta.setText("Dar de alta");
         jBAlta.setAlignmentY(0.0F);
         jBAlta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAltaActionPerformed(evt);
+            }
+        });
         jPanelBotonesSuperpuestos.add(jBAlta);
         jBAlta.setBounds(0, 10, 95, 23);
 
@@ -230,6 +235,16 @@ public class ABMProveedores extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBBajaActionPerformed
 
+    private void jBAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAltaActionPerformed
+        Proveedor prov = new Proveedor();
+        levantarDatosProveedor(prov);
+        
+        if (admin.darAltaProveedor(prov) == 1)
+            System.out.println("Datos insertados con éxito.");
+        else
+            System.out.println("Error al insertar los datos.");
+    }//GEN-LAST:event_jBAltaActionPerformed
+
     
     private void modificarBotones(int operacion){
         switch (operacion){
@@ -250,6 +265,17 @@ public class ABMProveedores extends javax.swing.JFrame {
                     break;}
         }
     }
+    
+    private void levantarDatosProveedor(Proveedor prov){
+        
+        //se da por supuesto que los campos estan completos y la informacion es coherente
+        prov.setIdProveedor(Integer.parseInt(jTextId.getText()));
+        prov.setNombre(jTextNombre.getText());
+        prov.setDireccion(jTextDireccion.getText());
+        prov.setTelefono(jTextTelefono.getText());
+        prov.setEmail(jTextEmail.getText());
+    }
+    
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -278,7 +304,7 @@ public class ABMProveedores extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ABMProveedores(operacion, idProveedor).setVisible(true);
+                new ABMProveedores(operacion, idProveedor, admin).setVisible(true);
                 
             }
         });

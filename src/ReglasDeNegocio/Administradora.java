@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ReglasDeNegocio;
-
+import CapaDeDatos.*;
+import java.sql.SQLException;
 
 public class Administradora {
     
@@ -14,10 +10,23 @@ public class Administradora {
         return id;
     }
     
-public void cargarFormula(ProductoTerminado p){
-    // esperar al formulario
-}    
+    public void cargarFormula(ProductoTerminado p){
+        // esperar al formulario
+    }    
     
-    
-    
+    public int darAltaProveedor(Proveedor prov){
+       
+        try{
+            AccesoADatos d = new AccesoADatos();
+            return (d.altaProveedor(prov.getIdProveedor(), prov.getNombre(), prov.getDireccion(), prov.getTelefono(), prov.getEmail()));
+        }
+       
+        catch(SQLException exc){
+            System.out.println(exc.getMessage());
+            return 0;
+        }
+        
+        
+        
+    }
 }
