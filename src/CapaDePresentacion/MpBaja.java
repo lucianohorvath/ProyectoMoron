@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package InterfazConUsuario;
+package CapaDePresentacion;
 
 /**
  *
  * @author Alfa02
  */
-public class PtAlta extends javax.swing.JFrame {
+public class MpBaja extends javax.swing.JFrame {
 
     /**
      * Creates new form ABMProductos
      */
-    public PtAlta() {
+    public MpBaja() {
         initComponents();
     }
 
@@ -30,12 +30,12 @@ public class PtAlta extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jTextID = new javax.swing.JTextField();
         jTextDescripcion = new javax.swing.JTextField();
-        jBAlta = new javax.swing.JButton();
         jBCancelar = new javax.swing.JButton();
+        jBBaja = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Alta de Productos Terminados");
+        setTitle("Baja de Materias Primas");
 
         jLabel1.setText("ID:");
 
@@ -45,14 +45,14 @@ public class PtAlta extends javax.swing.JFrame {
             }
         });
 
-        jBAlta.setText("Dar de alta");
-
         jBCancelar.setText("Cancelar");
         jBCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBCancelarActionPerformed(evt);
             }
         });
+
+        jBBaja.setText("Dar de baja");
 
         jLabel3.setText("Descripción:");
 
@@ -64,10 +64,9 @@ public class PtAlta extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jBAlta)
-                        .addGap(71, 71, 71)
-                        .addComponent(jBCancelar)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jBBaja)
+                        .addGap(60, 60, 60)
+                        .addComponent(jBCancelar))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -75,8 +74,8 @@ public class PtAlta extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
-                            .addComponent(jTextID))
-                        .addContainerGap(125, Short.MAX_VALUE))))
+                            .addComponent(jTextID))))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,11 +88,11 @@ public class PtAlta extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(60, 60, 60)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBAlta)
+                    .addComponent(jBBaja)
                     .addComponent(jBCancelar))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addGap(63, 63, 63))
         );
 
         pack();
@@ -124,14 +123,26 @@ public class PtAlta extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PtAlta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MpBaja.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PtAlta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MpBaja.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PtAlta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MpBaja.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PtAlta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MpBaja.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -140,13 +151,13 @@ public class PtAlta extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PtAlta().setVisible(true);
+                new MpBaja().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBAlta;
+    private javax.swing.JButton jBBaja;
     private javax.swing.JButton jBCancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;

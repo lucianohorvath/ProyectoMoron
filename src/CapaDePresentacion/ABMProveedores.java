@@ -1,11 +1,13 @@
-package InterfazConUsuario;
+package CapaDePresentacion;
 
+import CapaDeDatos.AccesoADatos;
 import ReglasDeNegocio.Administradora;
 import ReglasDeNegocio.Proveedor;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author Alfa02
+ * @author LucianoHorvath
  */
 public class ABMProveedores extends javax.swing.JFrame {
 
@@ -13,11 +15,19 @@ public class ABMProveedores extends javax.swing.JFrame {
     private static int idProveedor;
     private static Administradora admin;
     
+    public ABMProveedores(int op, Administradora admin) {           //este constructor no incluye idProv 
+        initComponents();                                           //porque es el que se llama al hacer un Alta
+        operacion = op;                                             
+        modificarBotones(operacion);
+        this.admin = admin;
+    }
+    
     public ABMProveedores(int op, int idProv, Administradora admin) {
         initComponents();
         operacion = op;
         idProveedor = idProv;
         modificarBotones(operacion);
+        mostrarDatosProveedor(idProv);
         this.admin = admin;
     }
 
@@ -160,6 +170,11 @@ public class ABMProveedores extends javax.swing.JFrame {
         jBModificar.setText("Modificar");
         jBModificar.setAlignmentY(0.0F);
         jBModificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBModificarActionPerformed(evt);
+            }
+        });
         jPanelBotonesSuperpuestos.add(jBModificar);
         jBModificar.setBounds(0, 10, 95, 23);
 
@@ -205,6 +220,7 @@ public class ABMProveedores extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
@@ -232,20 +248,59 @@ public class ABMProveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextIdActionPerformed
 
     private void jBBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBajaActionPerformed
-        // TODO add your handling code here:
+        String mensaje;
+                
+        if (admin.darBajaProveedor(idProveedor) == 1)
+            mensaje = "Proveedor eliminado con éxito.";
+        else
+            mensaje = "Error al eliminar al proveedor.";
+        
+        System.out.println(mensaje);        
+        JOptionPane.showMessageDialog(this, mensaje);
     }//GEN-LAST:event_jBBajaActionPerformed
 
     private void jBAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAltaActionPerformed
+        String mensaje;
+                
+        if ((admin.darAltaProveedor(levantarDatos()) == 1))
+            mensaje = "Datos insertados con éxito.";
+        else
+            mensaje = "Error al insertar los datos.";
+        
+        System.out.println(mensaje);        
+        JOptionPane.showMessageDialog(this, mensaje);
+        
+        /* ¿Esta alternativa es mejor?
+        
         Proveedor prov = new Proveedor();
         levantarDatosProveedor(prov);
-        
+        String mensaje;
+                
         if (admin.darAltaProveedor(prov) == 1)
-            System.out.println("Datos insertados con éxito.");
+            mensaje = "Datos insertados con éxito.";
         else
-            System.out.println("Error al insertar los datos.");
+            mensaje = "Error al insertar los datos.";
+        */
     }//GEN-LAST:event_jBAltaActionPerformed
 
-    
+    private void jBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificarActionPerformed
+        String mensaje;
+                
+        if (admin.modificarProveedor(levantarDatos()) == 1)
+            mensaje = "Datos modificados con éxito.";
+        else
+            mensaje = "Error al modificar los datos.";
+        
+        System.out.println(mensaje);        
+        JOptionPane.showMessageDialog(this, mensaje);
+    }//GEN-LAST:event_jBModificarActionPerformed
+
+    /**
+    * Este método modifica la visibilidad de los botones de la ventana,
+    * presentando el que corresponda según el parámetro recibido.
+    *
+    * @param operacion 1 para alta, 2 para modificación, 3 para baja.
+    */
     private void modificarBotones(int operacion){
         switch (operacion){
             case 1: {
@@ -266,6 +321,22 @@ public class ABMProveedores extends javax.swing.JFrame {
         }
     }
     
+    private void mostrarDatosProveedor(int idProv){
+        Proveedor p = AccesoADatos.traerProveedor(idProv);
+        
+        jTextId.setText(Integer.toString(idProv));
+        jTextNombre.setText(p.getNombre());
+        jTextDireccion.setText(p.getDireccion());
+        jTextTelefono.setText(p.getTelefono());
+        jTextEmail.setText(p.getEmail());        
+    }
+    
+     /**
+    * Recoge los datos de las cajas de texto y los pone en el objeto
+    * Proveedor que se pasa por parámetro.
+    *
+    * @param prov Objeto Proveedor en el que se cargan los datos.
+    */
     private void levantarDatosProveedor(Proveedor prov){
         
         //se da por supuesto que los campos estan completos y la informacion es coherente
@@ -275,6 +346,26 @@ public class ABMProveedores extends javax.swing.JFrame {
         prov.setTelefono(jTextTelefono.getText());
         prov.setEmail(jTextEmail.getText());
     }
+    
+    /**
+    * Recoge los datos de las cajas de texto y los pone en un objeto Proveedor.
+    *
+    * @return un objeto Proveedor con los datos cargados.
+    */
+    private Proveedor levantarDatos(){                  //alternativa a levantarDatosProveedor
+        //se da por supuesto que los campos estan completos y la informacion es coherente
+        Proveedor prov = new Proveedor();
+        
+        prov.setIdProveedor(Integer.parseInt(jTextId.getText()));
+        prov.setNombre(jTextNombre.getText());
+        prov.setDireccion(jTextDireccion.getText());
+        prov.setTelefono(jTextTelefono.getText());
+        prov.setEmail(jTextEmail.getText());
+        
+        return prov;
+    }
+    
+    
     
     
     public static void main(String args[]) {

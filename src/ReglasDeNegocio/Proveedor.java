@@ -5,7 +5,7 @@ package ReglasDeNegocio;
  * @author Alfa02
  */
 public class Proveedor {
-    private int IdProveedor;
+    private int idProveedor;
     private String nombre;
     private String direccion;
     private String telefono;
@@ -43,12 +43,16 @@ public class Proveedor {
         this.email = email;
     }
     
-        public int getIdProveedor() {
-        return IdProveedor;
+    public int getIdProveedor() {
+        return idProveedor;
     }
 
     public void setIdProveedor(int IdProveedor) {
-        this.IdProveedor = IdProveedor;
+        this.idProveedor = IdProveedor;
+    }
+    
+    public String toString(){
+        return ("Información del proveedor:\nID: " + idProveedor + "\nNombre: " + nombre + "\nDirección: " + direccion + "\nTeléfono: " + telefono + "\nEmail: " + email);
     }
     
 }

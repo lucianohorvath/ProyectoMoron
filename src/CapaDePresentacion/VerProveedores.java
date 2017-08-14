@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package InterfazConUsuario;
+package CapaDePresentacion;
 
 import CapaDeDatos.AccesoADatos;
 import ReglasDeNegocio.Administradora;
@@ -18,12 +18,16 @@ import javax.swing.table.DefaultTableModel;
 public class VerProveedores extends javax.swing.JFrame {
 
     private static int operacion;
-    private static int idProveedor;
     private static Administradora admin;
         
     /**
      * Creates new form VerProveedores
      */
+    public VerProveedores(){
+        initComponents();
+        cargarTabla();
+    }
+    
     public VerProveedores(int op, Administradora admin) {
         initComponents();
         operacion = op;
@@ -61,9 +65,16 @@ public class VerProveedores extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(jTablaProveedores);
@@ -117,14 +128,9 @@ public class VerProveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_jBCancelarActionPerformed
 
     private void jBSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSeleccionarActionPerformed
-       /* Object valor=
-        jTablaProveedores.getCellEditor(jTablaProveedores.getSelectedRow(), 1).getCellEditorValue();
-                
-        System.out.println(valor);
+        Object idSeleccionado = jTablaProveedores.getModel().getValueAt(jTablaProveedores.getSelectedRow(), 0);
+        int idProveedor = (int)idSeleccionado;
         
-        idProveedor = ????
-        como consigo el valor seleccionado en la tabla??
-        */
         ABMProveedores abmProv = new ABMProveedores(operacion, idProveedor, admin);
         this.dispose();
         abmProv.setVisible(true);
@@ -132,23 +138,15 @@ public class VerProveedores extends javax.swing.JFrame {
 
     
     private void cargarTabla(){
-        DefaultTableModel modelo = (DefaultTableModel)jTablaProveedores.getModel();     //lo casteo porque el modelo que se edita gráficamente es un TableModel. Sino, tendria que crear un DefaultTableModel y darle forma (columnas, filas) mediante código.
+        DefaultTableModel modelo = (DefaultTableModel)jTablaProveedores.getModel();    
+        /*Lo casteo porque el modelo que se edita gráficamente es un TableModel y quiero obtener los nombres
+        de las columnas y la cantidad de las mismas.
+        Sino, tendria que crear un DefaultTableModel y darle forma (columnas, filas) mediante código. */
         
-        ResultSet rs;
-        AccesoADatos a = new AccesoADatos();
+        System.out.println ("Cargando la tabla de proveedores...");
         
-        try{
-            rs = a.leerTablaProveedores();
-            }
-        catch(SQLException ex){
-            System.out.println("Error lalalaa");
-        }
-        
-        Object[] fila = {10,"pepe","ala","aasd","aqwew"};
-        modelo.addRow(fila);
-       
-        
-        
+        modelo = AccesoADatos.leerTablaProveedorYDevolverModelo(modelo);
+       // jTablaProveedores.setModel(modelo);       No es necesario.
     };
     
     
@@ -182,8 +180,7 @@ public class VerProveedores extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VerProveedores(operacion, admin).setVisible(true);
-                 
+                new VerProveedores(operacion, admin).setVisible(true);                
             }
         });
     }

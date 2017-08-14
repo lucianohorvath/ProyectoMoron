@@ -1,7 +1,8 @@
-package InterfazConUsuario;
+package CapaDePresentacion;
 
 import CapaDeDatos.AccesoADatos;
 import ReglasDeNegocio.Administradora;
+import javax.swing.JFrame;
 
 
 public class Inicio extends javax.swing.JFrame {
@@ -15,6 +16,7 @@ public class Inicio extends javax.swing.JFrame {
     public Inicio() {
         initComponents();
         admin = new Administradora();
+      //this.setExtendedState(JFrame.MAXIMIZED_BOTH);           // Para iniciar maximizada.
     }
 
     
@@ -23,10 +25,10 @@ public class Inicio extends javax.swing.JFrame {
     private void initComponents() {
 
         jInternalFrameIniciarSesion = new javax.swing.JInternalFrame();
-        jTFUsuario = new javax.swing.JTextField();
-        jPasswordFieldContraseña = new javax.swing.JPasswordField();
         jLUsuario = new javax.swing.JLabel();
         jLContraseña = new javax.swing.JLabel();
+        jTFUsuario = new javax.swing.JTextField();
+        jPasswordFieldContraseña = new javax.swing.JPasswordField();
         jBIngresar = new javax.swing.JButton();
         jBSalir = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -45,6 +47,7 @@ public class Inicio extends javax.swing.JFrame {
         jItemBajaProveedores = new javax.swing.JMenuItem();
         jMenuTrazabilidad = new javax.swing.JMenu();
         jItemConsultarPorLote = new javax.swing.JMenuItem();
+        jItemRegistrarInfRec = new javax.swing.JMenuItem();
         jMenuStock = new javax.swing.JMenu();
         jMenuStockMp = new javax.swing.JMenu();
         jItemStockMpAgregar = new javax.swing.JMenuItem();
@@ -56,9 +59,9 @@ public class Inicio extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema");
 
-        jInternalFrameIniciarSesion.setClosable(true);
         jInternalFrameIniciarSesion.setTitle("Iniciar sesión");
-        jInternalFrameIniciarSesion.setToolTipText("");
+        jInternalFrameIniciarSesion.setToolTipText("Necesita una cuenta de usuario para utilizar el sistema.");
+        jInternalFrameIniciarSesion.setPreferredSize(new java.awt.Dimension(300, 200));
         jInternalFrameIniciarSesion.setVisible(true);
 
         jLUsuario.setText("Usuario");
@@ -79,31 +82,34 @@ public class Inicio extends javax.swing.JFrame {
         jInternalFrameIniciarSesionLayout.setHorizontalGroup(
             jInternalFrameIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jInternalFrameIniciarSesionLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addContainerGap(52, Short.MAX_VALUE)
+                .addComponent(jBIngresar)
+                .addGap(36, 36, 36)
+                .addComponent(jBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
+            .addGroup(jInternalFrameIniciarSesionLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
                 .addGroup(jInternalFrameIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jBIngresar)
                     .addComponent(jLUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addGroup(jInternalFrameIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jInternalFrameIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTFUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                        .addComponent(jPasswordFieldContraseña))
-                    .addComponent(jBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jInternalFrameIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTFUsuario)
+                    .addComponent(jPasswordFieldContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30))
         );
         jInternalFrameIniciarSesionLayout.setVerticalGroup(
             jInternalFrameIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jInternalFrameIniciarSesionLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(22, 22, 22)
                 .addGroup(jInternalFrameIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTFUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
+                    .addComponent(jTFUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jInternalFrameIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jPasswordFieldContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLContraseña, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
+                .addGap(32, 32, 32)
                 .addGroup(jInternalFrameIniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBIngresar)
                     .addComponent(jBSalir))
@@ -208,6 +214,14 @@ public class Inicio extends javax.swing.JFrame {
         });
         jMenuTrazabilidad.add(jItemConsultarPorLote);
 
+        jItemRegistrarInfRec.setText("Registrar informe de recepción...");
+        jItemRegistrarInfRec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jItemRegistrarInfRecActionPerformed(evt);
+            }
+        });
+        jMenuTrazabilidad.add(jItemRegistrarInfRec);
+
         jMenuBar1.add(jMenuTrazabilidad);
 
         jMenuStock.setText("Control de stock");
@@ -260,20 +274,21 @@ public class Inicio extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(109, 109, 109)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(170, 170, 170)
                 .addComponent(jInternalFrameIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addGap(619, 619, 619))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(129, 129, 129)
                 .addComponent(jInternalFrameIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
@@ -335,7 +350,7 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jItemStockMpDescontarActionPerformed
 
     private void jItemAltaProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemAltaProveedoresActionPerformed
-        ABMProveedores abmProv = new ABMProveedores(1, 0, admin);
+        ABMProveedores abmProv = new ABMProveedores(1, admin);
         abmProv.setVisible(true);
     }//GEN-LAST:event_jItemAltaProveedoresActionPerformed
 
@@ -345,9 +360,15 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jItemModificacionProveedoresActionPerformed
 
     private void jItemBajaProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemBajaProveedoresActionPerformed
-         VerProveedores tablaProv = new VerProveedores(3, admin);
+        VerProveedores tablaProv = new VerProveedores(3, admin);
         tablaProv.setVisible(true);
+        
     }//GEN-LAST:event_jItemBajaProveedoresActionPerformed
+
+    private void jItemRegistrarInfRecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemRegistrarInfRecActionPerformed
+        InformeRecepcionAlta infRec = new InformeRecepcionAlta();
+        infRec.setVisible(true);
+    }//GEN-LAST:event_jItemRegistrarInfRecActionPerformed
 
     /**
      * @param args the command line arguments
@@ -380,7 +401,7 @@ public class Inicio extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AccesoADatos.Conectar();
+              //AccesoADatos.Conectar();         para qué acá? Si después se conecta en cada operación.
                 new Inicio().setVisible(true);
             }
         });
@@ -400,6 +421,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jItemPtAlta;
     private javax.swing.JMenuItem jItemPtBaja;
     private javax.swing.JMenuItem jItemPtModificacion;
+    private javax.swing.JMenuItem jItemRegistrarInfRec;
     private javax.swing.JMenuItem jItemStockMpAgregar;
     private javax.swing.JMenuItem jItemStockMpDescontar;
     private javax.swing.JMenuItem jItemStockPtAgregar;

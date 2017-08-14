@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package InterfazConUsuario;
+package CapaDePresentacion;
 
 /**
  *
  * @author Alfa02
  */
-public class AgregarStockMp extends javax.swing.JFrame {
+public class AgregarStockPt extends javax.swing.JFrame {
 
     /**
      * Creates new form AgregarStockMp
      */
-    public AgregarStockMp() {
+    public AgregarStockPt() {
         initComponents();
     }
 
@@ -28,7 +28,7 @@ public class AgregarStockMp extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTextIDMp = new javax.swing.JTextField();
+        jTextIDPt = new javax.swing.JTextField();
         jLID = new javax.swing.JLabel();
         jLCantidad = new javax.swing.JLabel();
         jTextCantidad = new javax.swing.JTextField();
@@ -36,15 +36,15 @@ public class AgregarStockMp extends javax.swing.JFrame {
         jBCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Agregar Stock de Materias Primas");
+        setTitle("Agregar Stock de Productos Terminados");
 
-        jTextIDMp.addActionListener(new java.awt.event.ActionListener() {
+        jTextIDPt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextIDMpActionPerformed(evt);
+                jTextIDPtActionPerformed(evt);
             }
         });
 
-        jLID.setText("ID Materia prima:");
+        jLID.setText("ID Producto Terminado:");
 
         jLCantidad.setText("Cantidad:");
 
@@ -71,9 +71,9 @@ public class AgregarStockMp extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jBCancelar)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextIDMp)
+                        .addComponent(jTextIDPt)
                         .addComponent(jTextCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)))
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,7 +81,7 @@ public class AgregarStockMp extends javax.swing.JFrame {
                 .addGap(64, 64, 64)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLID)
-                    .addComponent(jTextIDMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextIDPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLCantidad)
@@ -113,9 +113,9 @@ public class AgregarStockMp extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextIDMpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextIDMpActionPerformed
+    private void jTextIDPtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextIDPtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextIDMpActionPerformed
+    }//GEN-LAST:event_jTextIDPtActionPerformed
 
     private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
         this.dispose();
@@ -138,14 +138,22 @@ public class AgregarStockMp extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AgregarStockMp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarStockPt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AgregarStockMp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarStockPt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AgregarStockMp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarStockPt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AgregarStockMp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarStockPt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -158,7 +166,7 @@ public class AgregarStockMp extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AgregarStockMp().setVisible(true);
+                new AgregarStockPt().setVisible(true);
             }
         });
     }
@@ -170,6 +178,6 @@ public class AgregarStockMp extends javax.swing.JFrame {
     private javax.swing.JLabel jLID;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextCantidad;
-    private javax.swing.JTextField jTextIDMp;
+    private javax.swing.JTextField jTextIDPt;
     // End of variables declaration//GEN-END:variables
 }
