@@ -5,35 +5,57 @@
  */
 package CapaDePresentacion;
 
-import CapaDeDatos.AccesoADatos;
-import ReglasDeNegocio.Administradora;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import CapaDeDatos.Conexion;
+import CapaDeDatos.ProveedorDAO;
+import ReglasDeNegocio.GestorABM;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Alfa02
  */
-public class VerProveedores extends javax.swing.JFrame {
+public class VerProveedores extends javax.swing.JDialog {
 
     private static int operacion;
-    private static Administradora admin;
-        
+    private static GestorABM gestor;
+    private int idProveedor;
+    private String razonSocial;
+
     /**
      * Creates new form VerProveedores
      */
-    public VerProveedores(){
+     
+    public VerProveedores(JFrame padre, int op){
+        super(padre, true);
         initComponents();
+        operacion = op;
         cargarTabla();
     }
     
-    public VerProveedores(int op, Administradora admin) {
+    public VerProveedores(int op, GestorABM gestor) {
         initComponents();
         operacion = op;
-        this.admin = admin;
+        VerProveedores.gestor = gestor;
         cargarTabla();
     }
+    
+    public int getIdProveedor() {
+        return idProveedor;
+    }
+
+    public void setIdProveedor(int idProveedor) {
+        this.idProveedor = idProveedor;
+    }
+
+    public String getRazonSocial() {
+        return razonSocial;
+    }
+
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -59,14 +81,14 @@ public class VerProveedores extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID Proveedor", "Nombre", "Dirección", "Teléfono", "Email"
+                "ID Proveedor", "RazonSocial", "CUIT", "Dirección", "Teléfono", "Email"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -129,11 +151,18 @@ public class VerProveedores extends javax.swing.JFrame {
 
     private void jBSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSeleccionarActionPerformed
         Object idSeleccionado = jTablaProveedores.getModel().getValueAt(jTablaProveedores.getSelectedRow(), 0);
-        int idProveedor = (int)idSeleccionado;
+        idProveedor = (int)idSeleccionado;
         
-        ABMProveedores abmProv = new ABMProveedores(operacion, idProveedor, admin);
+        if (operacion == 4){        //metodo llamado desde InformeRecepcion
+            Object rSocialSeleccionada = jTablaProveedores.getModel().getValueAt(jTablaProveedores.getSelectedRow(), 1);
+            razonSocial = (String)rSocialSeleccionada;
+        }
+        else{
+            ABMProveedores abmProv = new ABMProveedores(operacion, idProveedor, gestor);
+            abmProv.setVisible(true);
+        }    
+                
         this.dispose();
-        abmProv.setVisible(true);
     }//GEN-LAST:event_jBSeleccionarActionPerformed
 
     
@@ -145,10 +174,10 @@ public class VerProveedores extends javax.swing.JFrame {
         
         System.out.println ("Cargando la tabla de proveedores...");
         
-        modelo = AccesoADatos.leerTablaProveedorYDevolverModelo(modelo);
+        modelo = ProveedorDAO.leerTablaProveedorYDevolverModelo(modelo);
        // jTablaProveedores.setModel(modelo);       No es necesario.
     };
-    
+       
     
     /**
      * @param args the command line arguments
@@ -180,7 +209,7 @@ public class VerProveedores extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VerProveedores(operacion, admin).setVisible(true);                
+                new VerProveedores(operacion, gestor).setVisible(true);                
             }
         });
     }

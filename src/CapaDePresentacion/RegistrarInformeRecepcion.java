@@ -5,17 +5,23 @@
  */
 package CapaDePresentacion;
 
+import ReglasDeNegocio.GestorInformeRecepcion;
+import javax.swing.JOptionPane;
+import ReglasDeNegocio.InformeRecepcion;
+
 /**
  *
  * @author Luciano
  */
-public class InformeRecepcionAlta extends javax.swing.JFrame {
+public class RegistrarInformeRecepcion extends javax.swing.JFrame {
 
+    private static GestorInformeRecepcion gestor;
     /**
      * Creates new form InformeRecepcionAlta
      */
-    public InformeRecepcionAlta() {
+    public RegistrarInformeRecepcion(GestorInformeRecepcion g) {
         initComponents();
+        gestor = g;
     }
 
     /**
@@ -42,8 +48,8 @@ public class InformeRecepcionAlta extends javax.swing.JFrame {
         jTextRazonSocial = new javax.swing.JTextField();
         jTextIdMp = new javax.swing.JTextField();
         jTextDescMp = new javax.swing.JTextField();
-        jTextNroRemito = new javax.swing.JTextField();
-        jTextNroLoteProv = new javax.swing.JTextField();
+        jTextNroRemito = new javax.swing.JFormattedTextField();
+        jTextNroLoteProv = new javax.swing.JFormattedTextField();
         jBBuscarMp = new javax.swing.JButton();
         jBBuscarProv = new javax.swing.JButton();
         jBRegistrar = new javax.swing.JButton();
@@ -52,6 +58,7 @@ public class InformeRecepcionAlta extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registrar Informe de Recepción");
 
+        jPanel1.setPreferredSize(new java.awt.Dimension(800, 400));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelNroLoteInt.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -97,7 +104,21 @@ public class InformeRecepcionAlta extends javax.swing.JFrame {
         jPanel1.add(jTextRazonSocial, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, 120, 30));
         jPanel1.add(jTextIdMp, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 120, 30));
         jPanel1.add(jTextDescMp, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 120, 30));
+
+        try {
+            jTextNroRemito.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jTextNroRemito.setPreferredSize(new java.awt.Dimension(6, 20));
         jPanel1.add(jTextNroRemito, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 220, 120, 30));
+
+        jTextNroLoteProv.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jTextNroLoteProv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextNroLoteProvActionPerformed(evt);
+            }
+        });
         jPanel1.add(jTextNroLoteProv, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 260, 120, 30));
 
         jBBuscarMp.setText("Buscar en la lista");
@@ -112,39 +133,81 @@ public class InformeRecepcionAlta extends javax.swing.JFrame {
         jPanel1.add(jBBuscarProv, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 140, 120, 30));
 
         jBRegistrar.setText("Registrar");
-        jPanel1.add(jBRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 480, -1, -1));
+        jBRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBRegistrarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jBRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 340, -1, -1));
 
         jBCancelar.setText("Cancelar");
-        jPanel1.add(jBCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 480, -1, -1));
+        jBCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBCancelarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jBCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 340, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        pack();
+        setSize(new java.awt.Dimension(816, 438));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBBuscarProvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarProvActionPerformed
-        VerProveedores verProv = new VerProveedores();
+        VerProveedores verProv = new VerProveedores(this, 4);
         verProv.setVisible(true);
         
-        /*
-        no se si llamarlo con constructor vacio o con operacion=4.
-        verProveedores deberia tener otro boton que NO me lleve al ABM, 
-        o el mismo boton fijandose si es la operacion 4... si lo es, va a un metodo especial
-        si no lo es, sigue su camino comun (ABM)
-        
-        */
+        jTextIdProv.setText(Integer.toString(verProv.getIdProveedor()));
+        jTextRazonSocial.setText(verProv.getRazonSocial());
+        jTextIdProv.setEnabled(false);
+        jTextRazonSocial.setEnabled(false);
     }//GEN-LAST:event_jBBuscarProvActionPerformed
 
+    private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jBCancelarActionPerformed
+
+    private void jBRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRegistrarActionPerformed
+        String mensaje;
+        
+        if ((gestor.registrarInformeRecepcion(levantarDatos()) == 1))
+            mensaje = "Informe de recepción registrado exitosamente.";
+        else
+            mensaje = "Error al registrar el informe de recepción.";
+        
+        System.out.println(mensaje);        
+        JOptionPane.showMessageDialog(this, mensaje);
+    }//GEN-LAST:event_jBRegistrarActionPerformed
+
+    private void jTextNroLoteProvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNroLoteProvActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextNroLoteProvActionPerformed
+
+    private InformeRecepcion levantarDatos(){
+        InformeRecepcion inf = new InformeRecepcion();
+        
+        inf.setIdProveedor(Integer.parseInt(jTextIdMp.getText()));
+        inf.setRazonSocialProv(jTextRazonSocial.getText());
+        inf.setIdMp(Integer.parseInt(jTextIdMp.getText()));
+        inf.setDescripcionMp(jTextDescMp.getText());
+        String nroRemitoLimpio = jTextNroRemito.getText().replaceAll("-", "");
+        inf.setNroRemitoProveedor(Integer.parseInt(nroRemitoLimpio));
+        inf.setNroLoteProveedor(Integer.parseInt(jTextNroLoteProv.getText()));
+                
+        return inf;
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -162,20 +225,23 @@ public class InformeRecepcionAlta extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InformeRecepcionAlta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarInformeRecepcion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InformeRecepcionAlta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarInformeRecepcion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InformeRecepcionAlta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarInformeRecepcion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InformeRecepcionAlta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarInformeRecepcion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InformeRecepcionAlta().setVisible(true);
+                new RegistrarInformeRecepcion(gestor).setVisible(true);
             }
         });
     }
@@ -199,8 +265,8 @@ public class InformeRecepcionAlta extends javax.swing.JFrame {
     private javax.swing.JTextField jTextIdMp;
     private javax.swing.JTextField jTextIdProv;
     private javax.swing.JTextField jTextNroLoteInt;
-    private javax.swing.JTextField jTextNroLoteProv;
-    private javax.swing.JTextField jTextNroRemito;
+    private javax.swing.JFormattedTextField jTextNroLoteProv;
+    private javax.swing.JFormattedTextField jTextNroRemito;
     private javax.swing.JTextField jTextRazonSocial;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,19 +6,28 @@ package ReglasDeNegocio;
  */
 public class Proveedor {
     private int idProveedor;
-    private String nombre;
+    private String razonSocial;
+    private long cuit;
     private String direccion;
     private String telefono;
     private String email;
 
-    public String getNombre() {
-        return nombre;
+    public String getRazonSocial() {
+        return razonSocial;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
     }
 
+    public long getCuit() {
+        return cuit;
+    }
+
+    public void setCuit(long cuit) {
+        this.cuit = cuit;
+    }
+    
     public String getDireccion() {
         return direccion;
     }
@@ -52,7 +61,7 @@ public class Proveedor {
     }
     
     public String toString(){
-        return ("Información del proveedor:\nID: " + idProveedor + "\nNombre: " + nombre + "\nDirección: " + direccion + "\nTeléfono: " + telefono + "\nEmail: " + email);
+        return ("Información del proveedor:\nID: " + idProveedor + "\nNombre: " + razonSocial + "\nCUIT: " + cuit + "\nDirección: " + direccion + "\nTeléfono: " + telefono + "\nEmail: " + email);
     }
     
 }

@@ -9,7 +9,7 @@ public abstract class Producto {
     protected int loteInterno;
     
     public Producto(String nom, int st, int stCritico, int loteInt){
-        this.id = Administradora.darId();
+        this.id = GestorABM.obtenerId();
         this.nombre = nom;
         this.stock = st;
         this.stockCritico = stCritico;

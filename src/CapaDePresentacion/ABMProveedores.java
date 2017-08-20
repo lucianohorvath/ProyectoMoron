@@ -1,8 +1,9 @@
 package CapaDePresentacion;
 
-import CapaDeDatos.AccesoADatos;
-import ReglasDeNegocio.Administradora;
+import ReglasDeNegocio.GestorABM;
 import ReglasDeNegocio.Proveedor;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,22 +14,21 @@ public class ABMProveedores extends javax.swing.JFrame {
 
     private static int operacion;
     private static int idProveedor;
-    private static Administradora admin;
+    private static GestorABM gestor;
     
-    public ABMProveedores(int op, Administradora admin) {           //este constructor no incluye idProv 
+    public ABMProveedores(int op, GestorABM gestor) {           //este constructor no incluye idProv 
         initComponents();                                           //porque es el que se llama al hacer un Alta
         operacion = op;                                             
-        modificarBotones(operacion);
-        this.admin = admin;
+        modificarVentana(operacion);
+        ABMProveedores.gestor = gestor;
     }
     
-    public ABMProveedores(int op, int idProv, Administradora admin) {
+    public ABMProveedores(int op, int idProv, GestorABM gestor) {
         initComponents();
         operacion = op;
         idProveedor = idProv;
-        modificarBotones(operacion);
-        mostrarDatosProveedor(idProv);
-        this.admin = admin;
+        modificarVentana(operacion);
+        ABMProveedores.gestor = gestor;
     }
 
     /**
@@ -43,14 +43,16 @@ public class ABMProveedores extends javax.swing.JFrame {
         jPanelDatos = new javax.swing.JPanel();
         jLID = new javax.swing.JLabel();
         jTextId = new javax.swing.JTextField();
-        jLNombre = new javax.swing.JLabel();
-        jTextNombre = new javax.swing.JTextField();
+        jLRazonSocial = new javax.swing.JLabel();
+        jTextRazonSocial = new javax.swing.JTextField();
         jLDireccion = new javax.swing.JLabel();
         jTextDireccion = new javax.swing.JTextField();
         jLTelefono = new javax.swing.JLabel();
         jTextTelefono = new javax.swing.JTextField();
         jLEmail = new javax.swing.JLabel();
         jTextEmail = new javax.swing.JTextField();
+        jLCuit = new javax.swing.JLabel();
+        jTextCuit = new javax.swing.JFormattedTextField();
         jPanelBotonesSuperpuestos = new javax.swing.JPanel();
         jBAlta = new javax.swing.JButton();
         jBModificar = new javax.swing.JButton();
@@ -65,18 +67,19 @@ public class ABMProveedores extends javax.swing.JFrame {
         jLID.setText("ID Proveedor:");
         jLID.setPreferredSize(new java.awt.Dimension(70, 20));
 
+        jTextId.setEnabled(false);
         jTextId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextIdActionPerformed(evt);
             }
         });
 
-        jLNombre.setText("Nombre:");
-        jLNombre.setPreferredSize(new java.awt.Dimension(85, 20));
+        jLRazonSocial.setText("Razón Social:");
+        jLRazonSocial.setPreferredSize(new java.awt.Dimension(85, 20));
 
-        jTextNombre.addActionListener(new java.awt.event.ActionListener() {
+        jTextRazonSocial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextNombreActionPerformed(evt);
+                jTextRazonSocialActionPerformed(evt);
             }
         });
 
@@ -107,25 +110,49 @@ public class ABMProveedores extends javax.swing.JFrame {
             }
         });
 
+        jLCuit.setText("CUIT:");
+        jLCuit.setPreferredSize(new java.awt.Dimension(85, 20));
+
+        try {
+            jTextCuit.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-########-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jTextCuit.setToolTipText("Sólo se permiten valores numéricos.");
+        jTextCuit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextCuitActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelDatosLayout = new javax.swing.GroupLayout(jPanelDatos);
         jPanelDatos.setLayout(jPanelDatosLayout);
         jPanelDatosLayout.setHorizontalGroup(
             jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelDatosLayout.createSequentialGroup()
-                .addGroup(jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLID, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextId)
-                        .addComponent(jTextNombre)
-                        .addComponent(jTextDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanelDatosLayout.createSequentialGroup()
+                        .addGroup(jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLID, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextId, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(jTextRazonSocial)))
+                    .addGroup(jPanelDatosLayout.createSequentialGroup()
+                        .addGroup(jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanelDatosLayout.createSequentialGroup()
+                        .addComponent(jLCuit, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextCuit)))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanelDatosLayout.setVerticalGroup(
@@ -137,8 +164,12 @@ public class ABMProveedores extends javax.swing.JFrame {
                     .addComponent(jLID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLCuit, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextCuit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -150,8 +181,7 @@ public class ABMProveedores extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .addComponent(jLEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jPanelBotonesSuperpuestos.setLayout(null);
@@ -228,20 +258,20 @@ public class ABMProveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_jBCancelarActionPerformed
 
     private void jTextEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextEmailActionPerformed
-        // TODO add your handling code here:
+        realizarOperacion();
     }//GEN-LAST:event_jTextEmailActionPerformed
 
     private void jTextTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextTelefonoActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jTextTelefonoActionPerformed
 
     private void jTextDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextDireccionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextDireccionActionPerformed
 
-    private void jTextNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNombreActionPerformed
+    private void jTextRazonSocialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextRazonSocialActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextNombreActionPerformed
+    }//GEN-LAST:event_jTextRazonSocialActionPerformed
 
     private void jTextIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextIdActionPerformed
         // TODO add your handling code here:
@@ -250,19 +280,28 @@ public class ABMProveedores extends javax.swing.JFrame {
     private void jBBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBajaActionPerformed
         String mensaje;
                 
-        if (admin.darBajaProveedor(idProveedor) == 1)
+        if (gestor.darBajaProveedor(idProveedor) == 1)
             mensaje = "Proveedor eliminado con éxito.";
         else
             mensaje = "Error al eliminar al proveedor.";
         
         System.out.println(mensaje);        
         JOptionPane.showMessageDialog(this, mensaje);
+        this.dispose();
     }//GEN-LAST:event_jBBajaActionPerformed
 
     private void jBAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAltaActionPerformed
         String mensaje;
-                
-        if ((admin.darAltaProveedor(levantarDatos()) == 1))
+        
+        /*
+        ¿ validarDatos() == 1 ?  ese metodo devuelve uno si los datos son correctos (no estan en blanco las claves foraneas, el email tiene arroba y .com, etc
+        antes de dar dar de alta el campo id debe estar deshabilitado, y puedo mostrar ahi cual sera el id (haciendo un select del max id + 1)
+        eso puede dar problemas si borre campos. sino en el mensaje de exito muestro que id efectivamente quedo
+        
+        o la validacion la puede hacer levantarDatos() y que se encargue de informar los errores
+        */
+        
+        if ((gestor.darAltaProveedor(levantarDatos()) == 1))
             mensaje = "Datos insertados con éxito.";
         else
             mensaje = "Error al insertar los datos.";
@@ -286,15 +325,45 @@ public class ABMProveedores extends javax.swing.JFrame {
     private void jBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificarActionPerformed
         String mensaje;
                 
-        if (admin.modificarProveedor(levantarDatos()) == 1)
+        if (gestor.modificarProveedor(levantarDatos()) == 1)
             mensaje = "Datos modificados con éxito.";
         else
             mensaje = "Error al modificar los datos.";
         
         System.out.println(mensaje);        
         JOptionPane.showMessageDialog(this, mensaje);
+        this.dispose();
     }//GEN-LAST:event_jBModificarActionPerformed
 
+    private void jTextCuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCuitActionPerformed
+       
+    }//GEN-LAST:event_jTextCuitActionPerformed
+
+    private void modificarVentana(int operacion){
+        modificarBotones(operacion);
+        
+        switch(operacion){
+            case 2: {
+                mostrarDatosProveedor(idProveedor);
+                break;
+            }    
+            case 3:{
+                mostrarDatosProveedor(idProveedor);
+                deshabilitarPanelDatos();
+                break;
+            }
+        }
+    }    
+      
+    private void deshabilitarPanelDatos(){
+        Component[] listaComponentes = jPanelDatos.getComponents();
+        
+        for (Component c: listaComponentes)
+            c.setEnabled(false);
+        
+    }
+    
+    
     /**
     * Este método modifica la visibilidad de los botones de la ventana,
     * presentando el que corresponda según el parámetro recibido.
@@ -322,10 +391,11 @@ public class ABMProveedores extends javax.swing.JFrame {
     }
     
     private void mostrarDatosProveedor(int idProv){
-        Proveedor p = AccesoADatos.traerProveedor(idProv);
+        Proveedor p = gestor.traerProveedor(idProv);
         
         jTextId.setText(Integer.toString(idProv));
-        jTextNombre.setText(p.getNombre());
+        jTextRazonSocial.setText(p.getRazonSocial());
+        jTextCuit.setText(Long.toString(p.getCuit()));
         jTextDireccion.setText(p.getDireccion());
         jTextTelefono.setText(p.getTelefono());
         jTextEmail.setText(p.getEmail());        
@@ -341,7 +411,7 @@ public class ABMProveedores extends javax.swing.JFrame {
         
         //se da por supuesto que los campos estan completos y la informacion es coherente
         prov.setIdProveedor(Integer.parseInt(jTextId.getText()));
-        prov.setNombre(jTextNombre.getText());
+        prov.setRazonSocial(jTextRazonSocial.getText());
         prov.setDireccion(jTextDireccion.getText());
         prov.setTelefono(jTextTelefono.getText());
         prov.setEmail(jTextEmail.getText());
@@ -356,16 +426,32 @@ public class ABMProveedores extends javax.swing.JFrame {
         //se da por supuesto que los campos estan completos y la informacion es coherente
         Proveedor prov = new Proveedor();
         
-        prov.setIdProveedor(Integer.parseInt(jTextId.getText()));
-        prov.setNombre(jTextNombre.getText());
+        prov.setRazonSocial(jTextRazonSocial.getText());
+        String cuitLimpio = jTextCuit.getText().replaceAll("-", "");    //le saco los guiones
+        prov.setCuit(Long.valueOf(cuitLimpio));
         prov.setDireccion(jTextDireccion.getText());
         prov.setTelefono(jTextTelefono.getText());
         prov.setEmail(jTextEmail.getText());
-        
+         
         return prov;
     }
     
-    
+    /**
+    * Realiza la operación correspondiente (A,B,M). El método se utiliza al presionar enter 
+    * en un campo de texto, como alternativa a hacer click en el botón A/B/M.
+    */
+    private void realizarOperacion() {
+        ActionEvent evt=null;
+        
+        switch(operacion){
+            case 1: jBAltaActionPerformed(evt);
+                    break;
+            case 2: jBModificarActionPerformed(evt);
+                    break;
+            case 3: jBBajaActionPerformed(evt);
+                    break;
+        }
+    }
     
     
     public static void main(String args[]) {
@@ -395,7 +481,7 @@ public class ABMProveedores extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ABMProveedores(operacion, idProveedor, admin).setVisible(true);
+                new ABMProveedores(operacion, idProveedor, gestor).setVisible(true);
                 
             }
         });
@@ -406,17 +492,21 @@ public class ABMProveedores extends javax.swing.JFrame {
     private javax.swing.JButton jBBaja;
     private javax.swing.JButton jBCancelar;
     private javax.swing.JButton jBModificar;
+    private javax.swing.JLabel jLCuit;
     private javax.swing.JLabel jLDireccion;
     private javax.swing.JLabel jLEmail;
     private javax.swing.JLabel jLID;
-    private javax.swing.JLabel jLNombre;
+    private javax.swing.JLabel jLRazonSocial;
     private javax.swing.JLabel jLTelefono;
     private javax.swing.JPanel jPanelBotonesSuperpuestos;
     private javax.swing.JPanel jPanelDatos;
+    private javax.swing.JFormattedTextField jTextCuit;
     private javax.swing.JTextField jTextDireccion;
     private javax.swing.JTextField jTextEmail;
     private javax.swing.JTextField jTextId;
-    private javax.swing.JTextField jTextNombre;
+    private javax.swing.JTextField jTextRazonSocial;
     private javax.swing.JTextField jTextTelefono;
     // End of variables declaration//GEN-END:variables
+
+
 }

@@ -1,8 +1,7 @@
 package CapaDePresentacion;
 
-import CapaDeDatos.AccesoADatos;
-import ReglasDeNegocio.Administradora;
-import javax.swing.JFrame;
+import ReglasDeNegocio.GestorABM;
+import ReglasDeNegocio.GestorInformeRecepcion;
 
 
 public class Inicio extends javax.swing.JFrame {
@@ -10,12 +9,14 @@ public class Inicio extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    Administradora admin;
-    
+    private GestorABM gestorABM;
+    private GestorInformeRecepcion gestorInformeR;
     
     public Inicio() {
         initComponents();
-        admin = new Administradora();
+        gestorABM = new GestorABM();
+        gestorInformeR = new GestorInformeRecepcion();
+        
       //this.setExtendedState(JFrame.MAXIMIZED_BOTH);           // Para iniciar maximizada.
     }
 
@@ -49,15 +50,12 @@ public class Inicio extends javax.swing.JFrame {
         jItemConsultarPorLote = new javax.swing.JMenuItem();
         jItemRegistrarInfRec = new javax.swing.JMenuItem();
         jMenuStock = new javax.swing.JMenu();
-        jMenuStockMp = new javax.swing.JMenu();
-        jItemStockMpAgregar = new javax.swing.JMenuItem();
-        jItemStockMpDescontar = new javax.swing.JMenuItem();
-        jMenuStockPt = new javax.swing.JMenu();
-        jItemStockPtAgregar = new javax.swing.JMenuItem();
-        jItemStockPtDescontar = new javax.swing.JMenuItem();
+        jItemStockMp = new javax.swing.JMenuItem();
+        jItemStockPt = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema");
+        setPreferredSize(new java.awt.Dimension(640, 480));
 
         jInternalFrameIniciarSesion.setTitle("Iniciar sesión");
         jInternalFrameIniciarSesion.setToolTipText("Necesita una cuenta de usuario para utilizar el sistema.");
@@ -226,45 +224,21 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenuStock.setText("Control de stock");
 
-        jMenuStockMp.setText("Materia prima");
-
-        jItemStockMpAgregar.setText("Agregar");
-        jItemStockMpAgregar.addActionListener(new java.awt.event.ActionListener() {
+        jItemStockMp.setText("Materias primas");
+        jItemStockMp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jItemStockMpAgregarActionPerformed(evt);
+                jItemStockMpActionPerformed(evt);
             }
         });
-        jMenuStockMp.add(jItemStockMpAgregar);
+        jMenuStock.add(jItemStockMp);
 
-        jItemStockMpDescontar.setText("Descontar");
-        jItemStockMpDescontar.addActionListener(new java.awt.event.ActionListener() {
+        jItemStockPt.setText("Productos terminados");
+        jItemStockPt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jItemStockMpDescontarActionPerformed(evt);
+                jItemStockPtActionPerformed(evt);
             }
         });
-        jMenuStockMp.add(jItemStockMpDescontar);
-
-        jMenuStock.add(jMenuStockMp);
-
-        jMenuStockPt.setText("Producto terminado");
-
-        jItemStockPtAgregar.setText("Agregar");
-        jItemStockPtAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jItemStockPtAgregarActionPerformed(evt);
-            }
-        });
-        jMenuStockPt.add(jItemStockPtAgregar);
-
-        jItemStockPtDescontar.setText("Descontar");
-        jItemStockPtDescontar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jItemStockPtDescontarActionPerformed(evt);
-            }
-        });
-        jMenuStockPt.add(jItemStockPtDescontar);
-
-        jMenuStock.add(jMenuStockPt);
+        jMenuStock.add(jItemStockPt);
 
         jMenuBar1.add(jMenuStock);
 
@@ -277,7 +251,7 @@ public class Inicio extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(170, 170, 170)
                 .addComponent(jInternalFrameIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(619, 619, 619))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -329,44 +303,35 @@ public class Inicio extends javax.swing.JFrame {
         ptb.setVisible(true);
     }//GEN-LAST:event_jItemPtBajaActionPerformed
 
-    private void jItemStockPtAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemStockPtAgregarActionPerformed
-        AgregarStockPt agregarPt = new AgregarStockPt();
-        agregarPt.setVisible(true);
-    }//GEN-LAST:event_jItemStockPtAgregarActionPerformed
+    private void jItemStockPtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemStockPtActionPerformed
+        Stock st = new Stock();
+        st.mostrarPestanaPt();
+        st.setVisible(true);
+    }//GEN-LAST:event_jItemStockPtActionPerformed
 
-    private void jItemStockMpAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemStockMpAgregarActionPerformed
-        AgregarStockMp agregarMp = new AgregarStockMp();
-        agregarMp.setVisible(true);
-    }//GEN-LAST:event_jItemStockMpAgregarActionPerformed
-
-    private void jItemStockPtDescontarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemStockPtDescontarActionPerformed
-        DescontarStockPt descontarPt = new DescontarStockPt();
-        descontarPt.setVisible(true);
-    }//GEN-LAST:event_jItemStockPtDescontarActionPerformed
-
-    private void jItemStockMpDescontarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemStockMpDescontarActionPerformed
-        DescontarStockMp descontarMp = new DescontarStockMp();
-        descontarMp.setVisible(true);
-    }//GEN-LAST:event_jItemStockMpDescontarActionPerformed
+    private void jItemStockMpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemStockMpActionPerformed
+        Stock st = new Stock();
+        st.setVisible(true);
+    }//GEN-LAST:event_jItemStockMpActionPerformed
 
     private void jItemAltaProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemAltaProveedoresActionPerformed
-        ABMProveedores abmProv = new ABMProveedores(1, admin);
+        ABMProveedores abmProv = new ABMProveedores(1, gestorABM);
         abmProv.setVisible(true);
     }//GEN-LAST:event_jItemAltaProveedoresActionPerformed
 
     private void jItemModificacionProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemModificacionProveedoresActionPerformed
-        VerProveedores tablaProv = new VerProveedores(2, admin);
+        VerProveedores tablaProv = new VerProveedores(2, gestorABM);
         tablaProv.setVisible(true);
     }//GEN-LAST:event_jItemModificacionProveedoresActionPerformed
 
     private void jItemBajaProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemBajaProveedoresActionPerformed
-        VerProveedores tablaProv = new VerProveedores(3, admin);
+        VerProveedores tablaProv = new VerProveedores(3, gestorABM);
         tablaProv.setVisible(true);
         
     }//GEN-LAST:event_jItemBajaProveedoresActionPerformed
 
     private void jItemRegistrarInfRecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemRegistrarInfRecActionPerformed
-        InformeRecepcionAlta infRec = new InformeRecepcionAlta();
+        RegistrarInformeRecepcion infRec = new RegistrarInformeRecepcion(gestorInformeR);
         infRec.setVisible(true);
     }//GEN-LAST:event_jItemRegistrarInfRecActionPerformed
 
@@ -422,10 +387,8 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jItemPtBaja;
     private javax.swing.JMenuItem jItemPtModificacion;
     private javax.swing.JMenuItem jItemRegistrarInfRec;
-    private javax.swing.JMenuItem jItemStockMpAgregar;
-    private javax.swing.JMenuItem jItemStockMpDescontar;
-    private javax.swing.JMenuItem jItemStockPtAgregar;
-    private javax.swing.JMenuItem jItemStockPtDescontar;
+    private javax.swing.JMenuItem jItemStockMp;
+    private javax.swing.JMenuItem jItemStockPt;
     private javax.swing.JLabel jLContraseña;
     private javax.swing.JLabel jLUsuario;
     private javax.swing.JMenu jMenuABM;
@@ -434,8 +397,6 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuProveedores;
     private javax.swing.JMenu jMenuStock;
-    private javax.swing.JMenu jMenuStockMp;
-    private javax.swing.JMenu jMenuStockPt;
     private javax.swing.JMenu jMenuTrazabilidad;
     private javax.swing.JPasswordField jPasswordFieldContraseña;
     private javax.swing.JTextField jTFUsuario;
