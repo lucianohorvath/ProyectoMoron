@@ -1,7 +1,10 @@
 package CapaDePresentacion;
 
-import ReglasDeNegocio.GestorABM;
+import ReglasDeNegocio.GestorProveedor;
 import ReglasDeNegocio.GestorInformeRecepcion;
+import ReglasDeNegocio.GestorLogin;
+import java.awt.Component;
+import javax.swing.JOptionPane;
 
 
 public class Inicio extends javax.swing.JFrame {
@@ -9,15 +12,18 @@ public class Inicio extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    private GestorABM gestorABM;
+    private GestorProveedor gestorABM;
     private GestorInformeRecepcion gestorInformeR;
+    private GestorLogin gestorL;
+    private int rolUsuario = 0;
     
     public Inicio() {
         initComponents();
-        gestorABM = new GestorABM();
+        gestorABM = new GestorProveedor();
         gestorInformeR = new GestorInformeRecepcion();
-        
-      //this.setExtendedState(JFrame.MAXIMIZED_BOTH);           // Para iniciar maximizada.
+        gestorL = new GestorLogin();
+        modificarVentana();             //o hago esto o hago modal la ventana interna, de lo contrario se puede acceder a todos los menues.
+        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);           // Para iniciar maximizada.
     }
 
     
@@ -32,7 +38,7 @@ public class Inicio extends javax.swing.JFrame {
         jPasswordFieldContraseña = new javax.swing.JPasswordField();
         jBIngresar = new javax.swing.JButton();
         jBSalir = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenuPrincipal = new javax.swing.JMenuBar();
         jMenuABM = new javax.swing.JMenu();
         jMenuABMmp = new javax.swing.JMenu();
         jItemMpAlta = new javax.swing.JMenuItem();
@@ -42,7 +48,7 @@ public class Inicio extends javax.swing.JFrame {
         jItemPtAlta = new javax.swing.JMenuItem();
         jItemPtModificacion = new javax.swing.JMenuItem();
         jItemPtBaja = new javax.swing.JMenuItem();
-        jMenuProveedores = new javax.swing.JMenu();
+        jMenuABMProveedores = new javax.swing.JMenu();
         jItemAltaProveedores = new javax.swing.JMenuItem();
         jItemModificacionProveedores = new javax.swing.JMenuItem();
         jItemBajaProveedores = new javax.swing.JMenuItem();
@@ -52,11 +58,14 @@ public class Inicio extends javax.swing.JFrame {
         jMenuStock = new javax.swing.JMenu();
         jItemStockMp = new javax.swing.JMenuItem();
         jItemStockPt = new javax.swing.JMenuItem();
+        jMenuSesion = new javax.swing.JMenu();
+        jItemIniciarSesion = new javax.swing.JMenuItem();
+        jItemCerrarSesion = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema");
-        setPreferredSize(new java.awt.Dimension(640, 480));
 
+        jInternalFrameIniciarSesion.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         jInternalFrameIniciarSesion.setTitle("Iniciar sesión");
         jInternalFrameIniciarSesion.setToolTipText("Necesita una cuenta de usuario para utilizar el sistema.");
         jInternalFrameIniciarSesion.setPreferredSize(new java.awt.Dimension(300, 200));
@@ -66,7 +75,18 @@ public class Inicio extends javax.swing.JFrame {
 
         jLContraseña.setText("Contraseña");
 
+        jPasswordFieldContraseña.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordFieldContraseñaActionPerformed(evt);
+            }
+        });
+
         jBIngresar.setText("Ingresar");
+        jBIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBIngresarActionPerformed(evt);
+            }
+        });
 
         jBSalir.setText("Salir");
         jBSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -172,7 +192,7 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenuABM.add(jMenuABMpt);
 
-        jMenuProveedores.setText("Proveedores");
+        jMenuABMProveedores.setText("Proveedores");
 
         jItemAltaProveedores.setText("Alta");
         jItemAltaProveedores.addActionListener(new java.awt.event.ActionListener() {
@@ -180,7 +200,7 @@ public class Inicio extends javax.swing.JFrame {
                 jItemAltaProveedoresActionPerformed(evt);
             }
         });
-        jMenuProveedores.add(jItemAltaProveedores);
+        jMenuABMProveedores.add(jItemAltaProveedores);
 
         jItemModificacionProveedores.setText("Modificación");
         jItemModificacionProveedores.addActionListener(new java.awt.event.ActionListener() {
@@ -188,7 +208,7 @@ public class Inicio extends javax.swing.JFrame {
                 jItemModificacionProveedoresActionPerformed(evt);
             }
         });
-        jMenuProveedores.add(jItemModificacionProveedores);
+        jMenuABMProveedores.add(jItemModificacionProveedores);
 
         jItemBajaProveedores.setText("Baja");
         jItemBajaProveedores.addActionListener(new java.awt.event.ActionListener() {
@@ -196,11 +216,11 @@ public class Inicio extends javax.swing.JFrame {
                 jItemBajaProveedoresActionPerformed(evt);
             }
         });
-        jMenuProveedores.add(jItemBajaProveedores);
+        jMenuABMProveedores.add(jItemBajaProveedores);
 
-        jMenuABM.add(jMenuProveedores);
+        jMenuABM.add(jMenuABMProveedores);
 
-        jMenuBar1.add(jMenuABM);
+        jMenuPrincipal.add(jMenuABM);
 
         jMenuTrazabilidad.setText("Trazabilidad");
 
@@ -220,7 +240,7 @@ public class Inicio extends javax.swing.JFrame {
         });
         jMenuTrazabilidad.add(jItemRegistrarInfRec);
 
-        jMenuBar1.add(jMenuTrazabilidad);
+        jMenuPrincipal.add(jMenuTrazabilidad);
 
         jMenuStock.setText("Control de stock");
 
@@ -240,9 +260,29 @@ public class Inicio extends javax.swing.JFrame {
         });
         jMenuStock.add(jItemStockPt);
 
-        jMenuBar1.add(jMenuStock);
+        jMenuPrincipal.add(jMenuStock);
 
-        setJMenuBar(jMenuBar1);
+        jMenuSesion.setText("Sesión");
+
+        jItemIniciarSesion.setText("Iniciar sesión");
+        jItemIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jItemIniciarSesionActionPerformed(evt);
+            }
+        });
+        jMenuSesion.add(jItemIniciarSesion);
+
+        jItemCerrarSesion.setText("Cerrar sesión");
+        jItemCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jItemCerrarSesionActionPerformed(evt);
+            }
+        });
+        jMenuSesion.add(jItemCerrarSesion);
+
+        jMenuPrincipal.add(jMenuSesion);
+
+        setJMenuBar(jMenuPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -266,7 +306,10 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
-        // TODO add your handling code here:
+        if (rolUsuario != 0)            //permite salir sólo si ya se inició sesión
+            jInternalFrameIniciarSesion.dispose();
+        else
+            JOptionPane.showMessageDialog(this, "Debe iniciar sesión para utilizar el sistema.");
     }//GEN-LAST:event_jBSalirActionPerformed
 
     private void jItemConsultarPorLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemConsultarPorLoteActionPerformed
@@ -327,7 +370,6 @@ public class Inicio extends javax.swing.JFrame {
     private void jItemBajaProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemBajaProveedoresActionPerformed
         VerProveedores tablaProv = new VerProveedores(3, gestorABM);
         tablaProv.setVisible(true);
-        
     }//GEN-LAST:event_jItemBajaProveedoresActionPerformed
 
     private void jItemRegistrarInfRecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemRegistrarInfRecActionPerformed
@@ -335,6 +377,82 @@ public class Inicio extends javax.swing.JFrame {
         infRec.setVisible(true);
     }//GEN-LAST:event_jItemRegistrarInfRecActionPerformed
 
+    private void jBIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBIngresarActionPerformed
+        String user = jTFUsuario.getText();
+        String pass = String.valueOf(jPasswordFieldContraseña.getPassword());
+        
+        rolUsuario = gestorL.iniciarSesion(user, pass);
+        
+        if (rolUsuario == 0){
+            JOptionPane.showMessageDialog(this, "Error al iniciar sesión.");
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Inició sesión con éxito.");
+            jInternalFrameIniciarSesion.dispose();
+            modificarVentana();
+        }   
+    }//GEN-LAST:event_jBIngresarActionPerformed
+
+    private void jItemIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemIniciarSesionActionPerformed
+        jTFUsuario.setText("");
+        jPasswordFieldContraseña.setText("");        
+        jInternalFrameIniciarSesion.setVisible(true);
+        jTFUsuario.requestFocus();
+    }//GEN-LAST:event_jItemIniciarSesionActionPerformed
+
+    private void jItemCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemCerrarSesionActionPerformed
+        rolUsuario = 0;
+        modificarVentana();
+        JOptionPane.showMessageDialog(this, "Finalizó la sesión.");
+    }//GEN-LAST:event_jItemCerrarSesionActionPerformed
+
+    private void jPasswordFieldContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldContraseñaActionPerformed
+        jBIngresarActionPerformed(evt);
+    }//GEN-LAST:event_jPasswordFieldContraseñaActionPerformed
+    
+    /**
+     * Modifica la ventana según los permisos que posea el usuario que inició sesión.
+     * El rol 0 (cero) indica que no hay ninguna sesión iniciada.
+     */
+    private void modificarVentana() {
+        switch(rolUsuario){
+            case 0: {
+                    deshabilitarMenues();
+                    break;
+            }
+            case 1: {        
+                    habilitarTodo();
+                    break;
+            }
+            case 2: {
+                    habilitarTodo();
+                    deshabilitarABM();
+                    break;
+            }
+        }
+    }
+    
+    private void deshabilitarMenues() {
+        Component[] listaMenues = jMenuPrincipal.getComponents();
+        
+        for (Component c: listaMenues)
+            c.setEnabled(false);
+        
+        jMenuSesion.setEnabled(true);
+    }
+
+    private void habilitarTodo(){
+        Component[] listaMenues = jMenuPrincipal.getComponents();
+        
+        for (Component c: listaMenues)
+            c.setEnabled(true);
+    }
+    
+    private void deshabilitarABM(){
+        jMenuABM.setEnabled(false);
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -378,7 +496,9 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JInternalFrame jInternalFrameIniciarSesion;
     private javax.swing.JMenuItem jItemAltaProveedores;
     private javax.swing.JMenuItem jItemBajaProveedores;
+    private javax.swing.JMenuItem jItemCerrarSesion;
     private javax.swing.JMenuItem jItemConsultarPorLote;
+    private javax.swing.JMenuItem jItemIniciarSesion;
     private javax.swing.JMenuItem jItemModificacionProveedores;
     private javax.swing.JMenuItem jItemMpAlta;
     private javax.swing.JMenuItem jItemMpBaja;
@@ -392,10 +512,11 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel jLContraseña;
     private javax.swing.JLabel jLUsuario;
     private javax.swing.JMenu jMenuABM;
+    private javax.swing.JMenu jMenuABMProveedores;
     private javax.swing.JMenu jMenuABMmp;
     private javax.swing.JMenu jMenuABMpt;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenu jMenuProveedores;
+    private javax.swing.JMenuBar jMenuPrincipal;
+    private javax.swing.JMenu jMenuSesion;
     private javax.swing.JMenu jMenuStock;
     private javax.swing.JMenu jMenuTrazabilidad;
     private javax.swing.JPasswordField jPasswordFieldContraseña;

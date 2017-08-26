@@ -1,10 +1,11 @@
 package CapaDePresentacion;
 
-import ReglasDeNegocio.GestorABM;
+import ReglasDeNegocio.GestorProveedor;
 import ReglasDeNegocio.Proveedor;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -14,21 +15,21 @@ public class ABMProveedores extends javax.swing.JFrame {
 
     private static int operacion;
     private static int idProveedor;
-    private static GestorABM gestor;
+    private static GestorProveedor gestor;
     
-    public ABMProveedores(int op, GestorABM gestor) {           //este constructor no incluye idProv 
+    public ABMProveedores(int op, GestorProveedor gestor) {           //este constructor no incluye idProv 
         initComponents();                                           //porque es el que se llama al hacer un Alta
-        operacion = op;                                             
-        modificarVentana(operacion);
+        operacion = op;   
         ABMProveedores.gestor = gestor;
+        modificarVentana(operacion);
     }
     
-    public ABMProveedores(int op, int idProv, GestorABM gestor) {
+    public ABMProveedores(int op, int idProv, GestorProveedor gestor) {
         initComponents();
         operacion = op;
         idProveedor = idProv;
-        modificarVentana(operacion);
         ABMProveedores.gestor = gestor;
+        modificarVentana(operacion);
     }
 
     /**
@@ -45,14 +46,14 @@ public class ABMProveedores extends javax.swing.JFrame {
         jTextId = new javax.swing.JTextField();
         jLRazonSocial = new javax.swing.JLabel();
         jTextRazonSocial = new javax.swing.JTextField();
+        jLCuit = new javax.swing.JLabel();
+        jTextCuit = new javax.swing.JFormattedTextField();
         jLDireccion = new javax.swing.JLabel();
         jTextDireccion = new javax.swing.JTextField();
         jLTelefono = new javax.swing.JLabel();
         jTextTelefono = new javax.swing.JTextField();
         jLEmail = new javax.swing.JLabel();
         jTextEmail = new javax.swing.JTextField();
-        jLCuit = new javax.swing.JLabel();
-        jTextCuit = new javax.swing.JFormattedTextField();
         jPanelBotonesSuperpuestos = new javax.swing.JPanel();
         jBAlta = new javax.swing.JButton();
         jBModificar = new javax.swing.JButton();
@@ -83,6 +84,16 @@ public class ABMProveedores extends javax.swing.JFrame {
             }
         });
 
+        jLCuit.setText("CUIT:");
+        jLCuit.setPreferredSize(new java.awt.Dimension(85, 20));
+
+        try {
+            jTextCuit.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-########-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jTextCuit.setToolTipText("Sólo se permiten valores numéricos.");
+
         jLDireccion.setText("Dirección:");
         jLDireccion.setPreferredSize(new java.awt.Dimension(85, 20));
 
@@ -107,21 +118,6 @@ public class ABMProveedores extends javax.swing.JFrame {
         jTextEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextEmailActionPerformed(evt);
-            }
-        });
-
-        jLCuit.setText("CUIT:");
-        jLCuit.setPreferredSize(new java.awt.Dimension(85, 20));
-
-        try {
-            jTextCuit.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-########-#")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jTextCuit.setToolTipText("Sólo se permiten valores numéricos.");
-        jTextCuit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextCuitActionPerformed(evt);
             }
         });
 
@@ -258,11 +254,11 @@ public class ABMProveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_jBCancelarActionPerformed
 
     private void jTextEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextEmailActionPerformed
-        realizarOperacion();
+        realizarOperacion(evt);
     }//GEN-LAST:event_jTextEmailActionPerformed
 
     private void jTextTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextTelefonoActionPerformed
-
+        realizarOperacion(evt);
     }//GEN-LAST:event_jTextTelefonoActionPerformed
 
     private void jTextDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextDireccionActionPerformed
@@ -297,29 +293,20 @@ public class ABMProveedores extends javax.swing.JFrame {
         ¿ validarDatos() == 1 ?  ese metodo devuelve uno si los datos son correctos (no estan en blanco las claves foraneas, el email tiene arroba y .com, etc
         antes de dar dar de alta el campo id debe estar deshabilitado, y puedo mostrar ahi cual sera el id (haciendo un select del max id + 1)
         eso puede dar problemas si borre campos. sino en el mensaje de exito muestro que id efectivamente quedo
-        
-        o la validacion la puede hacer levantarDatos() y que se encargue de informar los errores
         */
         
-        if ((gestor.darAltaProveedor(levantarDatos()) == 1))
-            mensaje = "Datos insertados con éxito.";
-        else
-            mensaje = "Error al insertar los datos.";
-        
-        System.out.println(mensaje);        
-        JOptionPane.showMessageDialog(this, mensaje);
-        
-        /* ¿Esta alternativa es mejor?
-        
-        Proveedor prov = new Proveedor();
-        levantarDatosProveedor(prov);
-        String mensaje;
-                
-        if (admin.darAltaProveedor(prov) == 1)
-            mensaje = "Datos insertados con éxito.";
-        else
-            mensaje = "Error al insertar los datos.";
-        */
+        //Sólo levanta y registra los datos si éstos son válidos.        
+        if (validarDatos()){
+            if ((gestor.darAltaProveedor(levantarDatos()) == 1))
+                mensaje = "Datos insertados con éxito.";
+            else
+                mensaje = "Error al insertar los datos.";
+
+            System.out.println(mensaje);        
+            JOptionPane.showMessageDialog(this, mensaje);   
+
+            limpiaPanelDatos();
+        }    
     }//GEN-LAST:event_jBAltaActionPerformed
 
     private void jBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificarActionPerformed
@@ -334,10 +321,6 @@ public class ABMProveedores extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, mensaje);
         this.dispose();
     }//GEN-LAST:event_jBModificarActionPerformed
-
-    private void jTextCuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCuitActionPerformed
-       
-    }//GEN-LAST:event_jTextCuitActionPerformed
 
     private void modificarVentana(int operacion){
         modificarBotones(operacion);
@@ -360,10 +343,16 @@ public class ABMProveedores extends javax.swing.JFrame {
         
         for (Component c: listaComponentes)
             c.setEnabled(false);
-        
     }
     
-    
+    private void limpiaPanelDatos(){
+        Component[] listaComponentes = jPanelDatos.getComponents();
+        
+        for (Component c: listaComponentes)
+            if (c instanceof JTextField)
+              ((JTextField) c).setText("");
+    }
+        
     /**
     * Este método modifica la visibilidad de los botones de la ventana,
     * presentando el que corresponda según el parámetro recibido.
@@ -440,9 +429,8 @@ public class ABMProveedores extends javax.swing.JFrame {
     * Realiza la operación correspondiente (A,B,M). El método se utiliza al presionar enter 
     * en un campo de texto, como alternativa a hacer click en el botón A/B/M.
     */
-    private void realizarOperacion() {
-        ActionEvent evt=null;
-        
+    private void realizarOperacion(ActionEvent evt) {
+                
         switch(operacion){
             case 1: jBAltaActionPerformed(evt);
                     break;
@@ -451,6 +439,37 @@ public class ABMProveedores extends javax.swing.JFrame {
             case 3: jBBajaActionPerformed(evt);
                     break;
         }
+    }
+    
+    private boolean validarDatos(){
+        boolean cuitVacio = false;
+        boolean sonDatosValidos = false;
+        
+        if ("           ".equals(jTextCuit.getText().replaceAll("-", ""))){
+            cuitVacio = true;
+            JOptionPane.showMessageDialog(this, "El campo CUIT no puede estar vacío.");
+        }
+        
+        if (!cuitVacio){
+            int errorExistencia;
+            String mensaje = "";
+            Long cuit = Long.valueOf(jTextCuit.getText().replaceAll("-", ""));
+            errorExistencia = gestor.comprobarExistencia(jTextRazonSocial.getText(), cuit);
+
+            if (errorExistencia == 1)
+                mensaje = "Ya existe esa razón social.";
+            else
+                if (errorExistencia == 2)
+                    mensaje = "Ya existe un proveedor con ese CUIT.";
+
+            if (errorExistencia != 0)
+                JOptionPane.showMessageDialog(this, mensaje);
+            
+            if (!cuitVacio && (errorExistencia == 0))
+                sonDatosValidos = true;
+        }
+        
+        return sonDatosValidos;
     }
     
     

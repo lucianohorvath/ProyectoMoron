@@ -5,9 +5,8 @@
  */
 package CapaDePresentacion;
 
-import CapaDeDatos.Conexion;
 import CapaDeDatos.ProveedorDAO;
-import ReglasDeNegocio.GestorABM;
+import ReglasDeNegocio.GestorProveedor;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 public class VerProveedores extends javax.swing.JDialog {
 
     private static int operacion;
-    private static GestorABM gestor;
+    private static GestorProveedor gestor;
     private int idProveedor;
     private String razonSocial;
 
@@ -26,14 +25,14 @@ public class VerProveedores extends javax.swing.JDialog {
      * Creates new form VerProveedores
      */
      
-    public VerProveedores(JFrame padre, int op){
+    public VerProveedores(JFrame padre, int op){        //constructor modal, para cuando se llama desde InfRecepcion
         super(padre, true);
         initComponents();
         operacion = op;
         cargarTabla();
     }
     
-    public VerProveedores(int op, GestorABM gestor) {
+    public VerProveedores(int op, GestorProveedor gestor) {
         initComponents();
         operacion = op;
         VerProveedores.gestor = gestor;

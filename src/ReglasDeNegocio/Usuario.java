@@ -3,11 +3,19 @@ package ReglasDeNegocio;
 
 public class Usuario {
     private int id;
+    private String nombreUsuario;
+    private String contraseña;
     private String nombre;
     private String apellido;
     private String funcion;
     private int rol;
 
+    public Usuario(String user, String pass){
+        nombreUsuario = user;
+        contraseña = pass;
+    }
+    
+    
     public int getId() {
         return id;
     }
@@ -16,6 +24,22 @@ public class Usuario {
         this.id = id;
     }
 
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -48,16 +72,7 @@ public class Usuario {
         this.rol = rol;
     }
     
-    public Usuario(int id, String nombre, String apellido, String funcion, int rol){
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.funcion = funcion;
-        this.rol = rol;
-    }
-    
-   
-    public String toString(){
+       public String toString(){
         return ("El usuario de ID: " + id + " se llama " + nombre + " " + apellido + " y su rol es: " + rol );
     }
     

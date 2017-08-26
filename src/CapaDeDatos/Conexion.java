@@ -1,51 +1,60 @@
 package CapaDeDatos;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Conexion {
    
-    static Connection obtenerConexionSQL() throws ClassNotFoundException, SQLException{
-        //Cargamos el driver JDBC en memoria
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+    private static String usuario;
+    private static String password;
+    private static String url;
+    private static String database;
+    private static String driver;
+    public static final String DBUSER = "DBUSER";
+    public static final String DBPASSWORD = "DBPASSWORD";
+    public static final String URL = "URL";
+    public static final String DATABASE = "DATABASE";
+    public static final String DRIVER = "DRIVER";
+    
+    static{
+        Properties ps = new Properties();
+        FileInputStream f = null;
         
-        String url = ("jdbc:sqlserver://localhost\\conexionSQL:1433;databaseName=ProyectoMoron");
-        Connection con = DriverManager.getConnection(url, "lucho", "lala");
-        System.out.println("Conectado con éxito a la base de datos.");     
-        
-        return con;
-    }
-    
-    
-    static Connection obtenerConexionSQLWindows() throws ClassNotFoundException, SQLException{
-        //Cargamos el driver JDBC en memoria
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        
-        String url = ("jdbc:sqlserver://localhost;databaseName=ProyectoMoron;integratedSecurity=true;");
-        Connection con = DriverManager.getConnection(url);
-        System.out.println("Conectado con éxito a la base de datos.");     
-        
-        return con;
-    }
-    
-    public static void Conectar(){
-    
-    Connection conec;
-    String conexionURL;
-    
-    
         try {
-          conexionURL = "jdbc:sqlserver://;database=ProyectoMoron;integratedSecurity=true;";
-          conec = DriverManager.getConnection(conexionURL);
-          System.out.println("Conectado con éxito a la base de datos.");
-        } 
-
-        catch (SQLException ex) 
-        {
-          System.out.println("Error en la conexión a la base de datos.");
-        }
-    }       //version mala
-    
+            f = new FileInputStream("./config/db.properties");
+            ps.load(f);
+            usuario = ps.getProperty(DBUSER);
+            password = ps.getProperty(DBPASSWORD);
+            url = ps.getProperty(URL);
+            database = ps.getProperty(DATABASE);
+            driver = ps.getProperty(DRIVER);
+            
+            Class.forName(driver);
+                        
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Error en el driver de bdd.");            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }               
+    }
+            
+    static Connection obtenerConexion() throws ClassNotFoundException, SQLException{
+        //Cargamos el driver JDBC en memoria
+        
+        Connection con = DriverManager.getConnection(url+database, usuario, password);
+        System.out.println("Conectado con éxito a la base de datos.");     
+        
+        return con;
+    }
+        
 }

@@ -14,7 +14,7 @@ import java.util.Date;
 public class InformeRecepcion {
     private int nroLoteInterno;
     private int nroLoteProveedor;
-    private int nroRemitoProveedor;
+    private long nroRemitoProveedor;
     private Date fecha;
     private int idProveedor;
     private int idMp;
@@ -37,11 +37,11 @@ public class InformeRecepcion {
         this.nroLoteProveedor = nroLoteProveedor;
     }
 
-    public int getNroRemitoProveedor() {
+    public long getNroRemitoProveedor() {
         return nroRemitoProveedor;
     }
 
-    public void setNroRemitoProveedor(int nroRemitoProveedor) {
+    public void setNroRemitoProveedor(long nroRemitoProveedor) {
         this.nroRemitoProveedor = nroRemitoProveedor;
     }
 

@@ -102,7 +102,13 @@ public class RegistrarInformeRecepcion extends javax.swing.JFrame {
         jPanel1.add(jTextFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, 120, 30));
         jPanel1.add(jTextIdProv, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 120, 30));
         jPanel1.add(jTextRazonSocial, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, 120, 30));
+
+        jTextIdMp.setToolTipText("Primero debe seleccionar un proveedor válido.");
+        jTextIdMp.setEnabled(false);
         jPanel1.add(jTextIdMp, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 120, 30));
+
+        jTextDescMp.setToolTipText("Primero debe seleccionar un proveedor válido.");
+        jTextDescMp.setEnabled(false);
         jPanel1.add(jTextDescMp, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 120, 30));
 
         try {
@@ -113,7 +119,7 @@ public class RegistrarInformeRecepcion extends javax.swing.JFrame {
         jTextNroRemito.setPreferredSize(new java.awt.Dimension(6, 20));
         jPanel1.add(jTextNroRemito, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 220, 120, 30));
 
-        jTextNroLoteProv.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jTextNroLoteProv.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###0"))));
         jTextNroLoteProv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextNroLoteProvActionPerformed(evt);
@@ -122,6 +128,11 @@ public class RegistrarInformeRecepcion extends javax.swing.JFrame {
         jPanel1.add(jTextNroLoteProv, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 260, 120, 30));
 
         jBBuscarMp.setText("Buscar en la lista");
+        jBBuscarMp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBuscarMpActionPerformed(evt);
+            }
+        });
         jPanel1.add(jBBuscarMp, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 180, 120, 30));
 
         jBBuscarProv.setText("Buscar en la lista");
@@ -171,6 +182,13 @@ public class RegistrarInformeRecepcion extends javax.swing.JFrame {
         jTextRazonSocial.setText(verProv.getRazonSocial());
         jTextIdProv.setEnabled(false);
         jTextRazonSocial.setEnabled(false);
+        
+        //la cagada de esto es que si no busco prov por tabla nunca se habilitan los botones, deberia hacerlo de otra manera.
+        //por ej: que los botones se habiliten si hay datos validos en el campo id proveedor.
+        //sino que esten siempre habilitados y listo.
+        //otra cosa: despues de registrar se podrian mostrar la fecha y el nro lote int en los campos correspondientes(aunque esten disabled)
+        jTextIdMp.setEnabled(true);
+        jTextDescMp.setEnabled(true);
     }//GEN-LAST:event_jBBuscarProvActionPerformed
 
     private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
@@ -190,18 +208,34 @@ public class RegistrarInformeRecepcion extends javax.swing.JFrame {
     }//GEN-LAST:event_jBRegistrarActionPerformed
 
     private void jTextNroLoteProvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNroLoteProvActionPerformed
-        // TODO add your handling code here:
+        jBRegistrarActionPerformed(evt);
     }//GEN-LAST:event_jTextNroLoteProvActionPerformed
+
+    private void jBBuscarMpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarMpActionPerformed
+        /*
+        El código sería algo así:
+                
+        VerMateriasPrimas verMp = new VerMateriasPrimas(this, idProv);      el "this" es xq va a ser modal.
+        verMp.setVisible(true);
+        
+        le paso el idProv para mostrar SOLO las materias primas que da ese proveedor.
+        
+        cuando vuelvo de la ventana modal, le pido a verMp el idMp y la descripcionMp que se eligio dentro de esa ventana.
+        
+        jTextIdMp.setEnabled(false);
+        jTextDescMp.setEnabled(false);
+        */
+    }//GEN-LAST:event_jBBuscarMpActionPerformed
 
     private InformeRecepcion levantarDatos(){
         InformeRecepcion inf = new InformeRecepcion();
         
-        inf.setIdProveedor(Integer.parseInt(jTextIdMp.getText()));
+        inf.setIdProveedor(Integer.parseInt(jTextIdProv.getText()));
         inf.setRazonSocialProv(jTextRazonSocial.getText());
         inf.setIdMp(Integer.parseInt(jTextIdMp.getText()));
         inf.setDescripcionMp(jTextDescMp.getText());
         String nroRemitoLimpio = jTextNroRemito.getText().replaceAll("-", "");
-        inf.setNroRemitoProveedor(Integer.parseInt(nroRemitoLimpio));
+        inf.setNroRemitoProveedor(Long.parseLong(nroRemitoLimpio));
         inf.setNroLoteProveedor(Integer.parseInt(jTextNroLoteProv.getText()));
                 
         return inf;

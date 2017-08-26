@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CapaDeDatos;
 
 import ReglasDeNegocio.Proveedor;
@@ -19,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 public class ProveedorDAO {
 
     public static int bajaProveedor(int idProv) throws ClassNotFoundException, SQLException {
-        Connection con = Conexion.obtenerConexionSQLWindows();
+        Connection con = Conexion.obtenerConexion();
         Statement sentencia = con.createStatement();
         
         int lineasAfectadas = sentencia.executeUpdate("DELETE FROM Proveedor WHERE IdProveedor = " + idProv);
@@ -28,9 +23,8 @@ public class ProveedorDAO {
         return lineasAfectadas;
     }
 
-    //Estos podría hacerlos todos estáticos.
     public static int altaProveedor(Proveedor p) throws SQLException, ClassNotFoundException {
-        Connection con = Conexion.obtenerConexionSQLWindows();
+        Connection con = Conexion.obtenerConexion();
         Statement sentencia = con.createStatement();
         
         System.out.println("INSERT INTO Proveedor (RazonSocial, CUIT, Direccion, Telefono, Email) VALUES ('" + p.getRazonSocial() + "'," + p.getCuit() + ",'" + p.getDireccion() + "','" + p.getTelefono() + "','" + p.getEmail() + "')");
@@ -45,9 +39,10 @@ public class ProveedorDAO {
         Proveedor p = null;
         Connection con;
         Statement st;
+        
         try {
             //Obtenemos la conexion a la base de datos
-            con = Conexion.obtenerConexionSQLWindows();
+            con = Conexion.obtenerConexion();
             st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM Proveedor WHERE IdProveedor = " + id);
             
@@ -60,7 +55,7 @@ public class ProveedorDAO {
                 p.setDireccion(rs.getNString("Direccion"));
                 p.setTelefono(rs.getNString("Telefono"));
                 p.setEmail(rs.getNString("Email"));
-            }
+            } 
             st.close();
             con.close();
             
@@ -73,10 +68,12 @@ public class ProveedorDAO {
     }
 
     public static int modificarProveedor(Proveedor p) throws ClassNotFoundException, SQLException {
-        Connection con = Conexion.obtenerConexionSQLWindows();
+        Connection con = Conexion.obtenerConexion();
         Statement sentencia = con.createStatement();
-        int lineasAfectadas = sentencia.executeUpdate("UPDATE Proveedor SET RazonSocial = '" + p.getRazonSocial() + "', CUIT = " + p.getCuit() + "', Direccion = '" + p.getDireccion() + "', Telefono = '" + p.getTelefono() + "', Email = '" + p.getEmail() + "' WHERE IdProveedor = " + p.getIdProveedor());
+        
+        int lineasAfectadas = sentencia.executeUpdate("UPDATE Proveedor SET RazonSocial = '" + p.getRazonSocial() + "', CUIT = " + p.getCuit() + ", Direccion = '" + p.getDireccion() + "', Telefono = '" + p.getTelefono() + "', Email = '" + p.getEmail() + "' WHERE IdProveedor = " + p.getIdProveedor());
         con.close();
+        
         return lineasAfectadas;
     }
 
@@ -84,11 +81,13 @@ public class ProveedorDAO {
         Connection con;
         Statement sentencia;
         ResultSet rs;
+        
         try {
             //Obtenemos la conexion a la base de datos
-            con = Conexion.obtenerConexionSQLWindows();
+            con = Conexion.obtenerConexion();
             sentencia = con.createStatement();
             rs = sentencia.executeQuery("SELECT * FROM Proveedor");
+            
             while (rs.next()) {
                 Object[] fila = new Object[6];
                 fila[0] = rs.getInt("IdProveedor");
@@ -99,6 +98,7 @@ public class ProveedorDAO {
                 fila[5] = rs.getObject("Email");
                 modelo.addRow(fila);
             }
+            
             rs.close();
             sentencia.close();
             con.close();
@@ -109,5 +109,55 @@ public class ProveedorDAO {
         }
         return modelo;
     }
+    
+    public static int buscarPorRazonSocial(String razonSocial){
+        Connection con;
+        Statement st;
+        int resultado = 0;
+        
+        try {
+            con = Conexion.obtenerConexion();
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM Proveedor "
+                    + "WHERE RazonSocial = '" + razonSocial + "'");
+            
+            if (rs.next())
+                resultado = 1;
+            
+            st.close();
+            con.close();
+            
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error en el driver. " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error en la consulta. " + e.getMessage());
+        }
+        return resultado;
+    }
+    
+    public static int buscarPorCuit(Long cuit){
+        Connection con;
+        Statement st;
+        int resultado = 0;
+        
+        try {
+            con = Conexion.obtenerConexion();
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM Proveedor WHERE CUIT = " + cuit);
+            
+            if (rs.next())
+                resultado = 1;
+            
+            st.close();
+            con.close();
+            
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error en el driver. " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error en la consulta. " + e.getMessage());
+        }
+        return resultado;
+    }
+    
     
 }

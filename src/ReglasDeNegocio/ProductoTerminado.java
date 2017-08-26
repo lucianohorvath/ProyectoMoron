@@ -2,7 +2,7 @@ package ReglasDeNegocio;
 import java.util.*;
 
 public class ProductoTerminado extends Producto{
-    private PuntoDeControl id;
+    private PuntoDeControl idPc;
     private Queue<Componente> formula;
     
     public ProductoTerminado(String nom, int st, int stCritico, int loteInt){
@@ -10,12 +10,12 @@ public class ProductoTerminado extends Producto{
         formula = new LinkedList<Componente>();
     }
 
-    public PuntoDeControl getId() {
-        return id;
+    public PuntoDeControl getIdPc() {
+        return idPc;
     }
 
     public void setId(PuntoDeControl id) {
-        this.id = id;
+        this.idPc = id;
     }
 
     public Queue<Componente> getFormula() {
