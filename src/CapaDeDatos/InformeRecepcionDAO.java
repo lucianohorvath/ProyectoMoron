@@ -1,6 +1,6 @@
 package CapaDeDatos;
 
-import ReglasDeNegocio.InformeRecepcion;
+import Modelo.InformeRecepcion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

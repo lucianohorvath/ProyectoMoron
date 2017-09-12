@@ -7,7 +7,7 @@ package CapaDePresentacion;
 
 import ReglasDeNegocio.GestorInformeRecepcion;
 import javax.swing.JOptionPane;
-import ReglasDeNegocio.InformeRecepcion;
+import Modelo.InformeRecepcion;
 
 /**
  *
@@ -198,10 +198,15 @@ public class RegistrarInformeRecepcion extends javax.swing.JFrame {
     private void jBRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRegistrarActionPerformed
         String mensaje;
         
+        //Validar que el nroLote no este vacio. algo mas?
+        
         if ((gestor.registrarInformeRecepcion(levantarDatos()) == 1))
             mensaje = "Informe de recepción registrado exitosamente.";
         else
             mensaje = "Error al registrar el informe de recepción.";
+        
+        //falta actualizar el stock. podria hacerlo el gestor o el dao.
+        //o se debe hacer recien luego del control de calidad?
         
         System.out.println(mensaje);        
         JOptionPane.showMessageDialog(this, mensaje);

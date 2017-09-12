@@ -1,6 +1,7 @@
 package CapaDeDatos;
 
-import ReglasDeNegocio.Proveedor;
+import Modelo.Proveedor;
+import Modelo.Usuario;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,9 +28,9 @@ public class ProveedorDAO {
         Connection con = Conexion.obtenerConexion();
         Statement sentencia = con.createStatement();
         
-        System.out.println("INSERT INTO Proveedor (RazonSocial, CUIT, Direccion, Telefono, Email) VALUES ('" + p.getRazonSocial() + "'," + p.getCuit() + ",'" + p.getDireccion() + "','" + p.getTelefono() + "','" + p.getEmail() + "')");
+        String sql = ("INSERT INTO Proveedor (RazonSocial, CUIT, Direccion, Telefono, Email, Usuario) VALUES ('" + p.getRazonSocial() + "'," + p.getCuit() + ",'" + p.getDireccion() + "','" + p.getTelefono() + "','" + p.getEmail() + "', '" + Usuario.getUsuarioSingleton().getNombreUsuario() + "')");
         
-        int lineasAfectadas = sentencia.executeUpdate("INSERT INTO Proveedor (RazonSocial, CUIT, Direccion, Telefono, Email) VALUES ('" + p.getRazonSocial() + "'," + p.getCuit() + ",'" + p.getDireccion() + "','" + p.getTelefono() + "','" + p.getEmail() + "')");
+        int lineasAfectadas = sentencia.executeUpdate(sql);
         con.close();
         
         return lineasAfectadas;
@@ -71,7 +72,9 @@ public class ProveedorDAO {
         Connection con = Conexion.obtenerConexion();
         Statement sentencia = con.createStatement();
         
-        int lineasAfectadas = sentencia.executeUpdate("UPDATE Proveedor SET RazonSocial = '" + p.getRazonSocial() + "', CUIT = " + p.getCuit() + ", Direccion = '" + p.getDireccion() + "', Telefono = '" + p.getTelefono() + "', Email = '" + p.getEmail() + "' WHERE IdProveedor = " + p.getIdProveedor());
+        String sql = ("UPDATE Proveedor SET RazonSocial = '" + p.getRazonSocial() + "', CUIT = " + p.getCuit() + ", Direccion = '" + p.getDireccion() + "', Telefono = '" + p.getTelefono() + "', Email = '" + p.getEmail() + "', Usuario = '" + Usuario.getUsuarioSingleton().getNombreUsuario() + "' WHERE IdProveedor = " + p.getIdProveedor());
+        System.out.println(sql);
+        int lineasAfectadas = sentencia.executeUpdate("UPDATE Proveedor SET RazonSocial = '" + p.getRazonSocial() + "', CUIT = " + p.getCuit() + ", Direccion = '" + p.getDireccion() + "', Telefono = '" + p.getTelefono() + "', Email = '" + p.getEmail() + "', Usuario = '" + Usuario.getUsuarioSingleton().getNombreUsuario() + "' WHERE IdProveedor = " + p.getIdProveedor());
         con.close();
         
         return lineasAfectadas;

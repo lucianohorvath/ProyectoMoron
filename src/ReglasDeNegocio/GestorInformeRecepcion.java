@@ -1,5 +1,6 @@
 package ReglasDeNegocio;
 
+import Modelo.InformeRecepcion;
 import CapaDeDatos.InformeRecepcionDAO;
 
 /**

@@ -1,7 +1,8 @@
-package ReglasDeNegocio;
+package Modelo;
 
 
 public class Usuario {
+    private static Usuario user;
     private int id;
     private String nombreUsuario;
     private String contraseña;
@@ -10,11 +11,14 @@ public class Usuario {
     private String funcion;
     private int rol;
 
-    public Usuario(String user, String pass){
-        nombreUsuario = user;
-        contraseña = pass;
+    private Usuario(){
+        
     }
     
+    private Usuario(String user, String pass){
+        nombreUsuario = user;
+        contraseña = pass;
+    }    
     
     public int getId() {
         return id;
@@ -72,7 +76,16 @@ public class Usuario {
         this.rol = rol;
     }
     
-       public String toString(){
+    public static Usuario getUsuarioSingleton(){
+        if (user == null)
+            user = new Usuario();
+        
+        return user;
+    }
+    
+    
+    @Override
+    public String toString(){
         return ("El usuario de ID: " + id + " se llama " + nombre + " " + apellido + " y su rol es: " + rol );
     }
     

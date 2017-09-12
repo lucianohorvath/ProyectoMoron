@@ -5,6 +5,7 @@
  */
 package ReglasDeNegocio;
 
+import Modelo.Proveedor;
 import CapaDeDatos.ProveedorDAO;
 import java.sql.SQLException;
 

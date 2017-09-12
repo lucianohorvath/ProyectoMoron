@@ -1,8 +1,10 @@
 package CapaDePresentacion;
 
 import ReglasDeNegocio.GestorProveedor;
+import ReglasDeNegocio.GestorProductoTerminado;
 import ReglasDeNegocio.GestorInformeRecepcion;
 import ReglasDeNegocio.GestorLogin;
+import Modelo.Usuario;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 
@@ -12,20 +14,26 @@ public class Inicio extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    private GestorProveedor gestorABM;
+    private GestorProveedor gestorProveedor;
+    private GestorProductoTerminado gestorPt;
     private GestorInformeRecepcion gestorInformeR;
     private GestorLogin gestorL;
-    private int rolUsuario = 0;
+    //private int rolUsuario;
     
     public Inicio() {
         initComponents();
-        gestorABM = new GestorProveedor();
+        inicializaciones();
+    }
+
+    private void inicializaciones(){
+        gestorProveedor = new GestorProveedor();
         gestorInformeR = new GestorInformeRecepcion();
+        gestorPt = new GestorProductoTerminado();
         gestorL = new GestorLogin();
+        //int rolUsuario = 0;
         modificarVentana();             //o hago esto o hago modal la ventana interna, de lo contrario se puede acceder a todos los menues.
         //this.setExtendedState(JFrame.MAXIMIZED_BOTH);           // Para iniciar maximizada.
     }
-
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -306,7 +314,7 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
-        if (rolUsuario != 0)            //permite salir sólo si ya se inició sesión
+        if (Usuario.getUsuarioSingleton().getRol() != 0)            //permite salir sólo si ya se inició sesión
             jInternalFrameIniciarSesion.dispose();
         else
             JOptionPane.showMessageDialog(this, "Debe iniciar sesión para utilizar el sistema.");
@@ -332,18 +340,18 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jItemMpBajaActionPerformed
 
     private void jItemPtAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemPtAltaActionPerformed
-        PtAlta pta = new PtAlta();
-        pta.setVisible(true);
+        ABMProductoTerminado abmPt = new ABMProductoTerminado(1, gestorPt);
+        abmPt.setVisible(true);
     }//GEN-LAST:event_jItemPtAltaActionPerformed
 
     private void jItemPtModificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemPtModificacionActionPerformed
-        PtModificacion ptm = new PtModificacion();
-        ptm.setVisible(true);
+        VerProductosTerminados verPt = new VerProductosTerminados(2, gestorPt);
+        verPt.setVisible(true);
     }//GEN-LAST:event_jItemPtModificacionActionPerformed
 
     private void jItemPtBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemPtBajaActionPerformed
-        PtBaja ptb = new PtBaja();
-        ptb.setVisible(true);
+        VerProductosTerminados verPt = new VerProductosTerminados(3, gestorPt);
+        verPt.setVisible(true);
     }//GEN-LAST:event_jItemPtBajaActionPerformed
 
     private void jItemStockPtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemStockPtActionPerformed
@@ -358,17 +366,17 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jItemStockMpActionPerformed
 
     private void jItemAltaProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemAltaProveedoresActionPerformed
-        ABMProveedores abmProv = new ABMProveedores(1, gestorABM);
+        ABMProveedores abmProv = new ABMProveedores(1, gestorProveedor);
         abmProv.setVisible(true);
     }//GEN-LAST:event_jItemAltaProveedoresActionPerformed
 
     private void jItemModificacionProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemModificacionProveedoresActionPerformed
-        VerProveedores tablaProv = new VerProveedores(2, gestorABM);
+        VerProveedores tablaProv = new VerProveedores(2, gestorProveedor);
         tablaProv.setVisible(true);
     }//GEN-LAST:event_jItemModificacionProveedoresActionPerformed
 
     private void jItemBajaProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemBajaProveedoresActionPerformed
-        VerProveedores tablaProv = new VerProveedores(3, gestorABM);
+        VerProveedores tablaProv = new VerProveedores(3, gestorProveedor);
         tablaProv.setVisible(true);
     }//GEN-LAST:event_jItemBajaProveedoresActionPerformed
 
@@ -378,12 +386,14 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jItemRegistrarInfRecActionPerformed
 
     private void jBIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBIngresarActionPerformed
-        String user = jTFUsuario.getText();
+        String nick = jTFUsuario.getText();
         String pass = String.valueOf(jPasswordFieldContraseña.getPassword());
         
-        rolUsuario = gestorL.iniciarSesion(user, pass);
+        Usuario.getUsuarioSingleton().setNombreUsuario(nick);        
+        Usuario.getUsuarioSingleton().setContraseña(pass);
+        Usuario.getUsuarioSingleton().setRol(gestorL.iniciarSesion(nick, pass));
         
-        if (rolUsuario == 0){
+        if (Usuario.getUsuarioSingleton().getRol() == 0){
             JOptionPane.showMessageDialog(this, "Error al iniciar sesión.");
         }
         else{
@@ -401,7 +411,7 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jItemIniciarSesionActionPerformed
 
     private void jItemCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemCerrarSesionActionPerformed
-        rolUsuario = 0;
+        Usuario.getUsuarioSingleton().setRol(0);
         modificarVentana();
         JOptionPane.showMessageDialog(this, "Finalizó la sesión.");
     }//GEN-LAST:event_jItemCerrarSesionActionPerformed
@@ -415,7 +425,7 @@ public class Inicio extends javax.swing.JFrame {
      * El rol 0 (cero) indica que no hay ninguna sesión iniciada.
      */
     private void modificarVentana() {
-        switch(rolUsuario){
+        switch(Usuario.getUsuarioSingleton().getRol()){
             case 0: {
                     deshabilitarMenues();
                     break;

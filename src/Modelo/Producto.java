@@ -1,4 +1,6 @@
-package ReglasDeNegocio;
+package Modelo;
+
+import ReglasDeNegocio.GestorProveedor;
 
 public abstract class Producto {
 

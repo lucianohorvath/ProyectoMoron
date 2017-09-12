@@ -49,7 +49,6 @@ public class Conexion {
     }
             
     static Connection obtenerConexion() throws ClassNotFoundException, SQLException{
-        //Cargamos el driver JDBC en memoria
         
         Connection con = DriverManager.getConnection(url+database, usuario, password);
         System.out.println("Conectado con éxito a la base de datos.");     

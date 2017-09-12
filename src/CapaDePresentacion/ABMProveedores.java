@@ -1,7 +1,7 @@
 package CapaDePresentacion;
 
 import ReglasDeNegocio.GestorProveedor;
-import ReglasDeNegocio.Proveedor;
+import Modelo.Proveedor;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
@@ -397,8 +397,6 @@ public class ABMProveedores extends javax.swing.JFrame {
     * @param prov Objeto Proveedor en el que se cargan los datos.
     */
     private void levantarDatosProveedor(Proveedor prov){
-        
-        //se da por supuesto que los campos estan completos y la informacion es coherente
         prov.setIdProveedor(Integer.parseInt(jTextId.getText()));
         prov.setRazonSocial(jTextRazonSocial.getText());
         prov.setDireccion(jTextDireccion.getText());
@@ -412,9 +410,9 @@ public class ABMProveedores extends javax.swing.JFrame {
     * @return un objeto Proveedor con los datos cargados.
     */
     private Proveedor levantarDatos(){                  //alternativa a levantarDatosProveedor
-        //se da por supuesto que los campos estan completos y la informacion es coherente
         Proveedor prov = new Proveedor();
         
+        prov.setIdProveedor(idProveedor);
         prov.setRazonSocial(jTextRazonSocial.getText());
         String cuitLimpio = jTextCuit.getText().replaceAll("-", "");    //le saco los guiones
         prov.setCuit(Long.valueOf(cuitLimpio));
@@ -441,6 +439,10 @@ public class ABMProveedores extends javax.swing.JFrame {
         }
     }
     
+    /**Verifica que el campo CUIT no esté vacío. Si no está vacío, verifica que el CUIT
+     * y la razón social no existan ya en la base de datos.
+     * @return true si todo es válido, false si falla algo.
+     */    
     private boolean validarDatos(){
         boolean cuitVacio = false;
         boolean sonDatosValidos = false;

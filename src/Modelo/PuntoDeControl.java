@@ -1,4 +1,4 @@
-package ReglasDeNegocio;
+package Modelo;
 
 
 public class PuntoDeControl {
