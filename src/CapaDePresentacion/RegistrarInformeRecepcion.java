@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CapaDePresentacion;
 
 import ReglasDeNegocio.GestorInformeRecepcion;
 import javax.swing.JOptionPane;
 import Modelo.InformeRecepcion;
+import ReglasDeNegocio.GestorMateriaPrima;
+import ReglasDeNegocio.GestorProveedor;
 
 /**
  *
@@ -16,12 +13,14 @@ import Modelo.InformeRecepcion;
 public class RegistrarInformeRecepcion extends javax.swing.JFrame {
 
     private static GestorInformeRecepcion gestor;
-    /**
-     * Creates new form InformeRecepcionAlta
-     */
-    public RegistrarInformeRecepcion(GestorInformeRecepcion g) {
+    private static GestorProveedor gestorProveedor;
+    private static GestorMateriaPrima gestorMp;
+    
+    public RegistrarInformeRecepcion(GestorInformeRecepcion g, GestorProveedor gestorP, GestorMateriaPrima gestorMp) {
         initComponents();
         gestor = g;
+        gestorProveedor = gestorP;
+        RegistrarInformeRecepcion.gestorMp = gestorMp;
     }
 
     /**
@@ -175,7 +174,7 @@ public class RegistrarInformeRecepcion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBBuscarProvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarProvActionPerformed
-        VerProveedores verProv = new VerProveedores(this, 4);
+        VerProveedores verProv = new VerProveedores(4, gestorProveedor, this);
         verProv.setVisible(true);
         
         jTextIdProv.setText(Integer.toString(verProv.getIdProveedor()));
@@ -217,19 +216,15 @@ public class RegistrarInformeRecepcion extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextNroLoteProvActionPerformed
 
     private void jBBuscarMpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarMpActionPerformed
-        /*
-        El código sería algo así:
-                
-        VerMateriasPrimas verMp = new VerMateriasPrimas(this, idProv);      el "this" es xq va a ser modal.
-        verMp.setVisible(true);
+        int idProveedor = Integer.parseInt(jTextIdProv.getText());
+        VerMateriasPrimas verMp = new VerMateriasPrimas(4, gestorMp, this, idProveedor);
+        verMp.setVisible(true); 
         
-        le paso el idProv para mostrar SOLO las materias primas que da ese proveedor.
-        
-        cuando vuelvo de la ventana modal, le pido a verMp el idMp y la descripcionMp que se eligio dentro de esa ventana.
-        
+        //cuando vuelvo de la ventana modal, le pido a verMp el idMp y la descripcionMp que se eligio dentro de esa ventana.
+        jTextIdMp.setText(Integer.toString(verMp.getIdMp()));
+        jTextDescMp.setText(verMp.getDescripcion());
         jTextIdMp.setEnabled(false);
         jTextDescMp.setEnabled(false);
-        */
     }//GEN-LAST:event_jBBuscarMpActionPerformed
 
     private InformeRecepcion levantarDatos(){
@@ -280,7 +275,7 @@ public class RegistrarInformeRecepcion extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RegistrarInformeRecepcion(gestor).setVisible(true);
+                new RegistrarInformeRecepcion(gestor, gestorProveedor, gestorMp).setVisible(true);
             }
         });
     }

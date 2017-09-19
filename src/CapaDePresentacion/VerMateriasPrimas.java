@@ -1,27 +1,59 @@
 package CapaDePresentacion;
 
-import ReglasDeNegocio.GestorProductoTerminado;
+import ReglasDeNegocio.GestorMateriaPrima;
 import javax.swing.JFrame;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Luciano
  */
-public class VerProductosTerminados extends JFrame {
+public class VerMateriasPrimas extends javax.swing.JDialog {
 
     private static int operacion;
-    private static GestorProductoTerminado gestor;
-    private int idPt;
+    private static GestorMateriaPrima gestor;
+    private int idMp;
     private String descripcion;
-    
-    public VerProductosTerminados(int op, GestorProductoTerminado gestor) {
+     
+    /**Este constructor se utiliza para que InformeRecepción sea su ventana padre.
+     * 
+     * @param padre el JFrame padre.
+     * @param gestor para comunicarse con el DAO.
+     * @param op 4 si se llama desde InformeRecepción.
+     * @param idProv el id del proveedor seleccionado en el informe de recepción.
+     */
+    public VerMateriasPrimas(int op, GestorMateriaPrima gestor, JFrame padre, int idProv){
+        super(padre, true);
         initComponents();
-        operacion = op;
-        VerProductosTerminados.gestor = gestor;
-        cargarTabla();
+        inicializaciones(op, gestor);
+        cargarTabla(idProv);
     }
     
+    /**Constructor común, llamado previamente a realizar una baja/modificación de materia prima.   
+     * 
+     * @param op 2 si es modificación, 3 si es baja.
+     * @param gestor para comunicarse con el DAO.
+     */
+    public VerMateriasPrimas(int op, GestorMateriaPrima gestor) {
+        initComponents();
+        inicializaciones(op, gestor);
+        cargarTabla();
+    }
+
+    private void inicializaciones(int op, GestorMateriaPrima gestor){
+        operacion = op;
+        VerMateriasPrimas.gestor = gestor;
+        if (operacion == 4)
+            jBActualizar.setVisible(false);
+    }
+     
+    public int getIdMp() {
+        return idMp;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,13 +64,13 @@ public class VerProductosTerminados extends JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTablaProdTerminados = new javax.swing.JTable();
+        jTablaMateriasPrimas = new javax.swing.JTable();
         jBSeleccionar = new javax.swing.JButton();
         jBCancelar = new javax.swing.JButton();
         jBActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Ver productos terminados");
+        setTitle("Ver materias primas");
         setLocation(new java.awt.Point(300, 150));
         setResizable(false);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
@@ -49,12 +81,12 @@ public class VerProductosTerminados extends JFrame {
             }
         });
 
-        jTablaProdTerminados.setModel(new javax.swing.table.DefaultTableModel(
+        jTablaMateriasPrimas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID Producto terminado", "Descripción"
+                "ID Materia prima", "Descripción"
             }
         ) {
             Class[] types = new Class [] {
@@ -72,11 +104,11 @@ public class VerProductosTerminados extends JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTablaProdTerminados);
-        if (jTablaProdTerminados.getColumnModel().getColumnCount() > 0) {
-            jTablaProdTerminados.getColumnModel().getColumn(0).setMinWidth(30);
-            jTablaProdTerminados.getColumnModel().getColumn(0).setPreferredWidth(200);
-            jTablaProdTerminados.getColumnModel().getColumn(0).setMaxWidth(250);
+        jScrollPane1.setViewportView(jTablaMateriasPrimas);
+        if (jTablaMateriasPrimas.getColumnModel().getColumnCount() > 0) {
+            jTablaMateriasPrimas.getColumnModel().getColumn(0).setMinWidth(30);
+            jTablaMateriasPrimas.getColumnModel().getColumn(0).setPreferredWidth(200);
+            jTablaMateriasPrimas.getColumnModel().getColumn(0).setMaxWidth(250);
         }
 
         jBSeleccionar.setText("Seleccionar");
@@ -138,11 +170,18 @@ public class VerProductosTerminados extends JFrame {
     }//GEN-LAST:event_jBCancelarActionPerformed
 
     private void jBSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSeleccionarActionPerformed
-        Object idSeleccionado = jTablaProdTerminados.getModel().getValueAt(jTablaProdTerminados.getSelectedRow(), 0);
-        idPt = (int)idSeleccionado;
-
-        ABMProductoTerminado abmPt = new ABMProductoTerminado(operacion, gestor, idPt, this);
-        abmPt.setVisible(true);
+        Object idSeleccionado = jTablaMateriasPrimas.getModel().getValueAt(jTablaMateriasPrimas.getSelectedRow(), 0);
+        idMp = (int)idSeleccionado;
+        
+        if (operacion == 4){        //metodo llamado desde InformeRecepcion
+            Object descripSeleccionada = jTablaMateriasPrimas.getModel().getValueAt(jTablaMateriasPrimas.getSelectedRow(), 1);
+            descripcion = (String)descripSeleccionada;
+            this.dispose();
+        }
+        else{
+            ABMMateriaPrima abmMp = new ABMMateriaPrima(operacion, gestor, idMp, this);
+            abmMp.setVisible(true);
+        }                    
     }//GEN-LAST:event_jBSeleccionarActionPerformed
 
     private void jBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActionPerformed
@@ -150,18 +189,22 @@ public class VerProductosTerminados extends JFrame {
     }//GEN-LAST:event_jBActualizarActionPerformed
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-        cargarTabla();
+       if (operacion != 4) 
+           cargarTabla();
     }//GEN-LAST:event_formWindowGainedFocus
-
     
     private void cargarTabla(){
-        System.out.println ("Cargando la tabla de productos terminados...");
-        DefaultTableModel modelo = (DefaultTableModel)jTablaProdTerminados.getModel();
-        
-        jTablaProdTerminados.setModel(gestor.leerTablaProdTerminados(modelo));
+        System.out.println ("Cargando la tabla de materias primas...");
+                
+        jTablaMateriasPrimas.setModel(gestor.traerTablaMateriaPrima());
     };
        
-    
+     private void cargarTabla(int idProveedor){
+        System.out.println ("Cargando la tabla de materias primas...");
+                
+        jTablaMateriasPrimas.setModel(gestor.traerTablaMateriaPrima(idProveedor));
+    };
+     
     /**
      * @param args the command line arguments
      */
@@ -179,21 +222,23 @@ public class VerProductosTerminados extends JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VerProductosTerminados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerMateriasPrimas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VerProductosTerminados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerMateriasPrimas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VerProductosTerminados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerMateriasPrimas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VerProductosTerminados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerMateriasPrimas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VerProductosTerminados(operacion, gestor).setVisible(true);                
+                new VerMateriasPrimas(operacion, gestor).setVisible(true);                
             }
         });
     }
@@ -203,6 +248,6 @@ public class VerProductosTerminados extends JFrame {
     private javax.swing.JButton jBCancelar;
     private javax.swing.JButton jBSeleccionar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTablaProdTerminados;
+    private javax.swing.JTable jTablaMateriasPrimas;
     // End of variables declaration//GEN-END:variables
 }

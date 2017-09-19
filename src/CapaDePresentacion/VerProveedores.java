@@ -1,60 +1,65 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CapaDePresentacion;
 
-import CapaDeDatos.ProveedorDAO;
 import ReglasDeNegocio.GestorProveedor;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Alfa02
- */
 public class VerProveedores extends javax.swing.JDialog {
 
     private static int operacion;
     private static GestorProveedor gestor;
     private int idProveedor;
     private String razonSocial;
-
-    /**
-     * Creates new form VerProveedores
-     */
      
-    public VerProveedores(JFrame padre, int op){        //constructor modal, para cuando se llama desde InfRecepcion
+    /**Este constructor crea una ventana modal, para ser llamado desde InformeRecepción
+     * 
+     * @param op 4 si es llamado desde InformeRecepción.
+     * @param gestor gestor encargado de comunicarse con el DAO.
+     * @param padre el JFrame padre.      
+     */
+    public VerProveedores(int op, GestorProveedor gestor, JFrame padre){
         super(padre, true);
         initComponents();
-        operacion = op;
-        cargarTabla();
+        inicializaciones(op, gestor);
     }
     
+    /**Este constructor se llama desde ABMMateriaPrima, ya que VerProveedores debe ser modal a ésta.
+     * Difiere del anterior en recibir un JDialog como padre.
+     * 
+     * @param op 5 si es llamado desde ABM MateriaPrima.
+     * @param gestor gestor encargado de comunicarse con el DAO.
+     * @param padre el JDialog padre.
+     */
+    public VerProveedores(int op, GestorProveedor gestor, JDialog padre){
+        super(padre, true);
+        initComponents();
+        inicializaciones(op, gestor);
+    }
+    
+    /**Constructor común, llamado previamente a hacer una baja o una modificación de Proveedores.
+     * 
+     * @param op 2 para modificación, 3 para baja.
+     * @param gestor gestor encargado de comunicarse con el DAO.
+     */
     public VerProveedores(int op, GestorProveedor gestor) {
         initComponents();
+        inicializaciones(op, gestor);
+    }
+    
+    private void inicializaciones(int op, GestorProveedor gestor){
         operacion = op;
         VerProveedores.gestor = gestor;
         cargarTabla();
     }
-    
+        
     public int getIdProveedor() {
         return idProveedor;
-    }
-
-    public void setIdProveedor(int idProveedor) {
-        this.idProveedor = idProveedor;
     }
 
     public String getRazonSocial() {
         return razonSocial;
     }
-
-    public void setRazonSocial(String razonSocial) {
-        this.razonSocial = razonSocial;
-    }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -148,33 +153,38 @@ public class VerProveedores extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_jBCancelarActionPerformed
 
+    /**Si la operación es 2 o 3 (Modificación o baja) abre la ventana ABM, si es 4 guarda la razón 
+     * social para luego pedirla desde InformeRecepción, si es 5 no entra al switch, solamente
+     * guarda el idProveedor para luego pedirlo desde ABM Materia Prima.
+     * 
+     */    
     private void jBSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSeleccionarActionPerformed
         Object idSeleccionado = jTablaProveedores.getModel().getValueAt(jTablaProveedores.getSelectedRow(), 0);
         idProveedor = (int)idSeleccionado;
         
-        if (operacion == 4){        //metodo llamado desde InformeRecepcion
-            Object rSocialSeleccionada = jTablaProveedores.getModel().getValueAt(jTablaProveedores.getSelectedRow(), 1);
-            razonSocial = (String)rSocialSeleccionada;
-        }
-        else{
-            ABMProveedores abmProv = new ABMProveedores(operacion, idProveedor, gestor);
-            abmProv.setVisible(true);
-        }    
-                
+        switch (operacion){
+            case 2:
+            case 3:     
+                ABMProveedores abmProv = new ABMProveedores(operacion, idProveedor, gestor);
+                abmProv.setVisible(true);
+                break;
+            case 4: 
+                Object rSocialSeleccionada = jTablaProveedores.getModel().getValueAt(jTablaProveedores.getSelectedRow(), 1);
+                razonSocial = (String)rSocialSeleccionada;
+                break;
+        }       
+
         this.dispose();
     }//GEN-LAST:event_jBSeleccionarActionPerformed
-
     
     private void cargarTabla(){
+        System.out.println ("Cargando la tabla de proveedores...");
         DefaultTableModel modelo = (DefaultTableModel)jTablaProveedores.getModel();    
         /*Lo casteo porque el modelo que se edita gráficamente es un TableModel y quiero obtener los nombres
         de las columnas y la cantidad de las mismas.
         Sino, tendria que crear un DefaultTableModel y darle forma (columnas, filas) mediante código. */
-        
-        System.out.println ("Cargando la tabla de proveedores...");
-        
-        modelo = ProveedorDAO.leerTablaProveedorYDevolverModelo(modelo);
-       // jTablaProveedores.setModel(modelo);       No es necesario.
+               
+        jTablaProveedores.setModel(gestor.leerTablaProveedorYDevolverModelo(modelo));
     };
        
     

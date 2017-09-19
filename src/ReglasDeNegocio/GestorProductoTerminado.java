@@ -2,6 +2,7 @@ package ReglasDeNegocio;
 
 import Modelo.ProductoTerminado;
 import CapaDeDatos.ProductoTerminadoDAO;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,5 +26,8 @@ public class GestorProductoTerminado {
         return (ProductoTerminadoDAO.traerPt(idPt));
     }
     
+    public DefaultTableModel leerTablaProdTerminados(DefaultTableModel modelo){
+        return ProductoTerminadoDAO.leerTablaProdTerminados(modelo);
+    }
     
 }

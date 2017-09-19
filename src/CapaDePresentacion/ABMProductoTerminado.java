@@ -4,7 +4,6 @@ import ReglasDeNegocio.GestorProductoTerminado;
 import Modelo.ProductoTerminado;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -30,7 +29,15 @@ public class ABMProductoTerminado extends javax.swing.JDialog {
         modificarVentana(operacion);
     }
     
-    public ABMProductoTerminado(int op, GestorProductoTerminado gestor, int idPt, JDialog padre) {
+    /**Este constructor se utiliza al modificar o dar de baja un producto terminado, ya que se 
+     * llama desde VerProductosTerminados y debe ser modal a ésta.
+     * 
+     * @param op 2 para Modificación, 3 para baja.
+     * @param gestor
+     * @param idPt el id del Producto Terminado en cuestión.
+     * @param padre el JFrame padre.
+     */
+    public ABMProductoTerminado(int op, GestorProductoTerminado gestor, int idPt, javax.swing.JFrame padre) {
         super(padre, true);
         initComponents();
         operacion = op;
@@ -75,7 +82,7 @@ public class ABMProductoTerminado extends javax.swing.JDialog {
             }
         });
         jPanelBotonesSuperpuestos.add(jBAlta);
-        jBAlta.setBounds(0, 10, 95, 23);
+        jBAlta.setBounds(0, 10, 95, 27);
 
         jBModificar.setText("Modificar");
         jBModificar.setAlignmentY(0.0F);
@@ -86,7 +93,7 @@ public class ABMProductoTerminado extends javax.swing.JDialog {
             }
         });
         jPanelBotonesSuperpuestos.add(jBModificar);
-        jBModificar.setBounds(0, 10, 95, 23);
+        jBModificar.setBounds(0, 10, 95, 27);
 
         jBBaja.setText("Dar de baja");
         jBBaja.setAlignmentY(0.0F);
@@ -97,7 +104,7 @@ public class ABMProductoTerminado extends javax.swing.JDialog {
             }
         });
         jPanelBotonesSuperpuestos.add(jBBaja);
-        jBBaja.setBounds(0, 10, 95, 23);
+        jBBaja.setBounds(0, 10, 95, 27);
 
         jBCancelar.setText("Cancelar");
         jBCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -106,7 +113,7 @@ public class ABMProductoTerminado extends javax.swing.JDialog {
             }
         });
         jPanelBotonesSuperpuestos.add(jBCancelar);
-        jBCancelar.setBounds(125, 10, 90, 23);
+        jBCancelar.setBounds(125, 10, 90, 27);
 
         jPanelDatos.setPreferredSize(new java.awt.Dimension(300, 120));
 
@@ -136,7 +143,7 @@ public class ABMProductoTerminado extends javax.swing.JDialog {
             .addGroup(jPanelDatosLayout.createSequentialGroup()
                 .addGroup(jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLIdPt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
+                    .addComponent(jLDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,7 +160,7 @@ public class ABMProductoTerminado extends javax.swing.JDialog {
                 .addGroup(jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -200,9 +207,9 @@ public class ABMProductoTerminado extends javax.swing.JDialog {
         String mensaje;
                 
         if (gestor.darBajaPt(idPt) == 1)
-            mensaje = "Proveedor eliminado con éxito.";
+            mensaje = "Producto terminado eliminado con éxito.";
         else
-            mensaje = "Error al eliminar al proveedor.";
+            mensaje = "Error al eliminar el producto terminado.";
         
         System.out.println(mensaje);        
         JOptionPane.showMessageDialog(this, mensaje);

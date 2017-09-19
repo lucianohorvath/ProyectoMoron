@@ -5,6 +5,7 @@ import ReglasDeNegocio.GestorProductoTerminado;
 import ReglasDeNegocio.GestorInformeRecepcion;
 import ReglasDeNegocio.GestorLogin;
 import Modelo.Usuario;
+import ReglasDeNegocio.GestorMateriaPrima;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 
@@ -16,6 +17,7 @@ public class Inicio extends javax.swing.JFrame {
      */
     private GestorProveedor gestorProveedor;
     private GestorProductoTerminado gestorPt;
+    private GestorMateriaPrima gestorMp;
     private GestorInformeRecepcion gestorInformeR;
     private GestorLogin gestorL;
     //private int rolUsuario;
@@ -26,8 +28,10 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     private void inicializaciones(){
+        //todos estos gestores podrían ser singleton
         gestorProveedor = new GestorProveedor();
         gestorInformeR = new GestorInformeRecepcion();
+        gestorMp = new GestorMateriaPrima();
         gestorPt = new GestorProductoTerminado();
         gestorL = new GestorLogin();
         //int rolUsuario = 0;
@@ -325,18 +329,18 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jItemConsultarPorLoteActionPerformed
 
     private void jItemMpAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemMpAltaActionPerformed
-        MpAlta mpa = new MpAlta();
-        mpa.setVisible(true);
+        ABMMateriaPrima abmMp = new ABMMateriaPrima(1, gestorMp, gestorProveedor);
+        abmMp.setVisible(true);
     }//GEN-LAST:event_jItemMpAltaActionPerformed
 
     private void jItemMpModificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemMpModificacionActionPerformed
-        MpModificacion mpm = new MpModificacion();
-        mpm.setVisible(true);
+        VerMateriasPrimas verMp = new VerMateriasPrimas(2, gestorMp);
+        verMp.setVisible(true);
     }//GEN-LAST:event_jItemMpModificacionActionPerformed
 
     private void jItemMpBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemMpBajaActionPerformed
-        MpBaja mpb = new MpBaja();
-        mpb.setVisible(true);
+        VerMateriasPrimas verMp = new VerMateriasPrimas(3, gestorMp);
+        verMp.setVisible(true);
     }//GEN-LAST:event_jItemMpBajaActionPerformed
 
     private void jItemPtAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemPtAltaActionPerformed
@@ -381,7 +385,7 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jItemBajaProveedoresActionPerformed
 
     private void jItemRegistrarInfRecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemRegistrarInfRecActionPerformed
-        RegistrarInformeRecepcion infRec = new RegistrarInformeRecepcion(gestorInformeR);
+        RegistrarInformeRecepcion infRec = new RegistrarInformeRecepcion(gestorInformeR, gestorProveedor, gestorMp);
         infRec.setVisible(true);
     }//GEN-LAST:event_jItemRegistrarInfRecActionPerformed
 

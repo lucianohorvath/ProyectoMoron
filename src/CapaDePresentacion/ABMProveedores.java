@@ -93,6 +93,11 @@ public class ABMProveedores extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         jTextCuit.setToolTipText("Sólo se permiten valores numéricos.");
+        jTextCuit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextCuitActionPerformed(evt);
+            }
+        });
 
         jLDireccion.setText("Dirección:");
         jLDireccion.setPreferredSize(new java.awt.Dimension(85, 20));
@@ -162,7 +167,7 @@ public class ABMProveedores extends javax.swing.JFrame {
                 .addGroup(jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLCuit, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextCuit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -177,7 +182,8 @@ public class ABMProveedores extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jPanelBotonesSuperpuestos.setLayout(null);
@@ -191,7 +197,7 @@ public class ABMProveedores extends javax.swing.JFrame {
             }
         });
         jPanelBotonesSuperpuestos.add(jBAlta);
-        jBAlta.setBounds(0, 10, 95, 23);
+        jBAlta.setBounds(0, 10, 95, 27);
 
         jBModificar.setText("Modificar");
         jBModificar.setAlignmentY(0.0F);
@@ -202,7 +208,7 @@ public class ABMProveedores extends javax.swing.JFrame {
             }
         });
         jPanelBotonesSuperpuestos.add(jBModificar);
-        jBModificar.setBounds(0, 10, 95, 23);
+        jBModificar.setBounds(0, 10, 95, 27);
 
         jBBaja.setText("Dar de baja");
         jBBaja.setAlignmentY(0.0F);
@@ -213,7 +219,7 @@ public class ABMProveedores extends javax.swing.JFrame {
             }
         });
         jPanelBotonesSuperpuestos.add(jBBaja);
-        jBBaja.setBounds(0, 10, 95, 23);
+        jBBaja.setBounds(0, 10, 95, 27);
 
         jBCancelar.setText("Cancelar");
         jBCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -222,7 +228,7 @@ public class ABMProveedores extends javax.swing.JFrame {
             }
         });
         jPanelBotonesSuperpuestos.add(jBCancelar);
-        jBCancelar.setBounds(125, 10, 90, 23);
+        jBCancelar.setBounds(125, 10, 90, 27);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -239,7 +245,7 @@ public class ABMProveedores extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                .addComponent(jPanelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanelBotonesSuperpuestos, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -321,6 +327,10 @@ public class ABMProveedores extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, mensaje);
         this.dispose();
     }//GEN-LAST:event_jBModificarActionPerformed
+
+    private void jTextCuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCuitActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextCuitActionPerformed
 
     private void modificarVentana(int operacion){
         modificarBotones(operacion);
