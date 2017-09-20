@@ -10,8 +10,18 @@ import javax.swing.table.DefaultTableModel;
  */
 public class GestorMateriaPrima {
 
-    public int darAltaMp(String descripcion){
-        return (MateriaPrimaDAO.altaMateriaPrima(descripcion));
+    public int darAltaMp(MateriaPrima mp, String proveedores){
+        String descripcion = mp.getDescripcion();
+        int stockCritico = mp.getStockCritico();        
+        String[] listaProv = proveedores.split(", ");
+        int[] prov = new int[listaProv.length];
+        
+        for (int i=0; i < listaProv.length; i++)
+            prov[i] = Integer.parseInt(listaProv[i]);
+        
+        int[] listaProveedores = mp.getListaProveedores();
+        
+        return (MateriaPrimaDAO.altaMateriaPrima(descripcion, stockCritico, listaProveedores));
     }
     
     public int darBajaMp(int idMp) {

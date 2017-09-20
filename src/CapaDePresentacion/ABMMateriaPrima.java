@@ -289,13 +289,16 @@ public class ABMMateriaPrima extends javax.swing.JDialog {
 
     private void jBAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAltaActionPerformed
         String mensaje;
-        String descripcion = jTextDescripcion.getText();
+        MateriaPrima mp = new MateriaPrima();
+        
+        mp.setDescripcion(jTextDescripcion.getText());  
+        mp.setStockCritico(Integer.parseInt(jTextStockCritico.getText()));
+        String proveedores = jTextProveedores.getText();
         
         //la validación de que la descripción no exista ya en la bdd la hará la bdd
-        //(hay que manejar la excepción)
-          
+        //(hay que manejar la excepción)          
         
-        if ((gestor.darAltaMp(descripcion) == 1))
+        if ((gestor.darAltaMp(mp, proveedores) == 1))
             mensaje = "Datos insertados con éxito.";
         else
             mensaje = "Error al insertar los datos.";
@@ -330,8 +333,20 @@ public class ABMMateriaPrima extends javax.swing.JDialog {
     private void jBAgregarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarProveedorActionPerformed
         VerProveedores verProv = new VerProveedores(5, gestorProveedor, this);        
         verProv.setVisible(true);
+        String proveedores = Integer.toString(verProv.getIdProveedor());
         
-        jTextProveedores.setText(Integer.toString(verProv.getIdProveedor()));
+        //habría que validar que el prov seleccionado no este ya en el campo jtextproveedores.
+        //y obviamente actualizar el metodo jBAlta para que lleve esto al DAO
+        
+        if (jTextProveedores.getText().contains(proveedores))
+           JOptionPane.showMessageDialog(this, "Ya añadió ese proveedor.");
+        else
+            if (jTextProveedores.getText().equals(""))
+                jTextProveedores.setText(proveedores);    
+            else{
+                proveedores = jTextProveedores.getText() + ", " + proveedores;    
+                jTextProveedores.setText(proveedores);
+            }
     }//GEN-LAST:event_jBAgregarProveedorActionPerformed
 
     private void modificarVentana(int operacion){

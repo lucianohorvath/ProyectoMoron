@@ -14,19 +14,39 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MateriaPrimaDAO {
     
-    public static int altaMateriaPrima(String descripcion) {
+    public static int altaMateriaPrima(String descripcion, int stockCritico, int[] listaProveedores) {
         int lineasAfectadas = 0;
         Connection con;   
         
         try {
             con = Conexion.obtenerConexion();
-
+            int idGenerado = 0;
+            
             PreparedStatement ps = con.prepareStatement("INSERT INTO MateriaPrima "
-                    + "(Descripcion) VALUES (?)");
+                    + "(Descripcion, StockCritico) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, descripcion);
-
+            ps.setInt(2, stockCritico);                
+            
             lineasAfectadas = ps.executeUpdate();
+            //Todo lo que sigue podría reemplazarse con un trigger (after insert)
+            ResultSet rs = ps.getGeneratedKeys();
+            
+            if (rs.next()){
+                idGenerado = rs.getInt(1);
+            }
+            
+            System.out.println(idGenerado);
+            
+            PreparedStatement psAsociada = con.prepareStatement("INSERT INTO MateriaPrima_Proveedor"
+            + " (IdMateriaPrima, IdProveedor) VALUES (?, ?)");
+            psAsociada.setInt(1, idGenerado);
+            
+            for (int prov: listaProveedores){
+                psAsociada.setInt(2, prov);
+                lineasAfectadas = psAsociada.executeUpdate();
+            }            
+            
             con.close();
         }
         
