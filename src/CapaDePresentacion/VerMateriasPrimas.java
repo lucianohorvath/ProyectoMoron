@@ -199,7 +199,7 @@ public class VerMateriasPrimas extends javax.swing.JDialog {
         jTablaMateriasPrimas.setModel(gestor.traerTablaMateriaPrima());
     };
        
-     private void cargarTabla(int idProveedor){
+    private void cargarTabla(int idProveedor){
         System.out.println ("Cargando la tabla de materias primas...");
                 
         jTablaMateriasPrimas.setModel(gestor.traerTablaMateriaPrima(idProveedor));

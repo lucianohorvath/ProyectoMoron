@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,11 +22,18 @@ public class InformeRecepcionDAO {
             PreparedStatement ps = con.prepareStatement("INSERT INTO InformeRecepcion "
                     + "(IdMpp, NroLoteProveedor, NroRemitoProveedor) VALUES (?,?,?)");
 
-            ps.setInt(1, obtenerIdMpp(inf.getIdProveedor(), inf.getIdMp()));
-            ps.setInt(2, inf.getNroLoteProveedor());
-            ps.setLong(3, inf.getNroRemitoProveedor());
+            int idMpp = obtenerIdMpp(inf.getIdProveedor(), inf.getIdMp());
+            
+            if (idMpp != 0){ 
+                ps.setInt(1, idMpp);
+                ps.setInt(2, inf.getNroLoteProveedor());
+                ps.setLong(3, inf.getNroRemitoProveedor());
 
-            lineasAfectadas = ps.executeUpdate();
+                lineasAfectadas = ps.executeUpdate();                
+            }
+            else
+                lineasAfectadas = -1;
+            
             con.close();
         }
         
@@ -46,16 +54,15 @@ public class InformeRecepcionDAO {
         try {
             Connection con = Conexion.obtenerConexion();
             
-            PreparedStatement ps = con.prepareStatement("SELECT Id FROM MateriaPrima_Proveedor "
+            PreparedStatement ps = con.prepareStatement("SELECT IdMpp FROM MateriaPrima_Proveedor "
                     + "WHERE IdMateriaPrima = ? AND IdProveedor = ?");
             
             ps.setInt(1, idMp);
             ps.setInt(2, idProv);
             rs = ps.executeQuery();
             
-            if (rs.next()) {
+            if (rs.next())
                 idMpp = rs.getInt(1);
-            }
             
             con.close();
         }    

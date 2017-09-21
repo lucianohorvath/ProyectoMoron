@@ -197,18 +197,14 @@ public class RegistrarInformeRecepcion extends javax.swing.JFrame {
     private void jBRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRegistrarActionPerformed
         String mensaje;
         
-        //Validar que el nroLote no este vacio. algo mas?
-        
-        if ((gestor.registrarInformeRecepcion(levantarDatos()) == 1))
-            mensaje = "Informe de recepción registrado exitosamente.";
-        else
-            mensaje = "Error al registrar el informe de recepción.";
-        
-        //falta actualizar el stock. podria hacerlo el gestor o el dao.
-        //o se debe hacer recien luego del control de calidad?
-        
-        System.out.println(mensaje);        
-        JOptionPane.showMessageDialog(this, mensaje);
+        if (validarDatos()){ 
+            mensaje = gestor.registrarInformeRecepcion(levantarDatos());
+            //falta actualizar el stock. podria hacerlo el gestor o el dao.
+            //o se debe hacer recien luego del control de calidad?
+
+            System.out.println(mensaje);        
+            JOptionPane.showMessageDialog(this, mensaje);
+        }
     }//GEN-LAST:event_jBRegistrarActionPerformed
 
     private void jTextNroLoteProvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNroLoteProvActionPerformed
@@ -220,7 +216,6 @@ public class RegistrarInformeRecepcion extends javax.swing.JFrame {
         VerMateriasPrimas verMp = new VerMateriasPrimas(4, gestorMp, this, idProveedor);
         verMp.setVisible(true); 
         
-        //cuando vuelvo de la ventana modal, le pido a verMp el idMp y la descripcionMp que se eligio dentro de esa ventana.
         jTextIdMp.setText(Integer.toString(verMp.getIdMp()));
         jTextDescMp.setText(verMp.getDescripcion());
         jTextIdMp.setEnabled(false);
@@ -239,6 +234,20 @@ public class RegistrarInformeRecepcion extends javax.swing.JFrame {
         inf.setNroLoteProveedor(Integer.parseInt(jTextNroLoteProv.getText()));
                 
         return inf;
+    }
+    
+    private boolean validarDatos() {
+        boolean nroRemitoVacio = jTextNroRemito.getText().replace("-", "").isEmpty();
+        boolean nroLoteProvVacio = jTextNroLoteProv.getText().isEmpty();
+        
+        if (nroRemitoVacio)
+            JOptionPane.showMessageDialog(this, "El número de remito no puede estar vacío.", "Error al validar los datos", JOptionPane.ERROR_MESSAGE);
+        else
+            if(nroLoteProvVacio)
+               JOptionPane.showMessageDialog(this, "El número de lote de proveedor no puede estar vacío.", "Error al validar los datos", JOptionPane.ERROR_MESSAGE);
+
+                
+        return (!nroRemitoVacio && !nroLoteProvVacio);
     }
     
     

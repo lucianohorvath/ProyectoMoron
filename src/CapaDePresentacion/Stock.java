@@ -1,9 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CapaDePresentacion;
+
+import ReglasDeNegocio.GestorMateriaPrima;
+import ReglasDeNegocio.GestorProductoTerminado;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -11,11 +10,14 @@ package CapaDePresentacion;
  */
 public class Stock extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Stock
-     */
-    public Stock() {
+    private static GestorMateriaPrima gestorMp;
+    private static GestorProductoTerminado gestorPt;
+
+    public Stock(GestorMateriaPrima gestorMp, GestorProductoTerminado gestorPt) {
         initComponents();
+        Stock.gestorMp = gestorMp;
+        Stock.gestorPt = gestorPt;
+        cargarTabla();        
     }
 
     /**
@@ -28,20 +30,35 @@ public class Stock extends javax.swing.JFrame {
 
         jTabbedPane = new javax.swing.JTabbedPane();
         jpMp = new javax.swing.JPanel();
-        jLID = new javax.swing.JLabel();
-        jLNombreMp = new javax.swing.JLabel();
-        jTextIDMp = new javax.swing.JTextField();
-        jTextNombreMp = new javax.swing.JTextField();
-        jBAgregar = new javax.swing.JButton();
-        jBCancelar = new javax.swing.JButton();
-        jBDescontar = new javax.swing.JButton();
-        jLCantidad = new javax.swing.JLabel();
-        jTextCantidad = new javax.swing.JTextField();
         jLExplicacion1 = new javax.swing.JLabel();
         jLExplicacion2 = new javax.swing.JLabel();
-        jScrollPane = new javax.swing.JScrollPane();
+        jLIdMp = new javax.swing.JLabel();
+        jLNombreMp = new javax.swing.JLabel();
+        jLCantidadMp = new javax.swing.JLabel();
+        jTextIDMp = new javax.swing.JTextField();
+        jTextNombreMp = new javax.swing.JTextField();
+        jTextCantidadMp = new javax.swing.JTextField();
+        jBBuscarMp = new javax.swing.JButton();
+        jBAgregarMp = new javax.swing.JButton();
+        jBCancelarMp = new javax.swing.JButton();
+        jBDescontarMp = new javax.swing.JButton();
+        jScrollPaneMp = new javax.swing.JScrollPane();
         jTableMp = new javax.swing.JTable();
         jpPt = new javax.swing.JPanel();
+        jLExplicacion3 = new javax.swing.JLabel();
+        jLExplicacion4 = new javax.swing.JLabel();
+        jLIdPt = new javax.swing.JLabel();
+        jLNombrePt = new javax.swing.JLabel();
+        jLCantidadPt = new javax.swing.JLabel();
+        jTextIDPt = new javax.swing.JTextField();
+        jTextNombrePt = new javax.swing.JTextField();
+        jTextCantidadPt = new javax.swing.JTextField();
+        jBBuscarPt = new javax.swing.JButton();
+        jBAgregarPt = new javax.swing.JButton();
+        jBCancelarPt = new javax.swing.JButton();
+        jBDescontarPt = new javax.swing.JButton();
+        jScrollPanePt = new javax.swing.JScrollPane();
+        jTablePt = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Stock");
@@ -50,14 +67,24 @@ public class Stock extends javax.swing.JFrame {
 
         jpMp.setPreferredSize(new java.awt.Dimension(640, 480));
 
-        jLID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLID.setLabelFor(jTextIDMp);
-        jLID.setText("ID Materia prima:");
-        jLID.setPreferredSize(new java.awt.Dimension(130, 25));
+        jLExplicacion1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLExplicacion1.setText("Ingrese el ID o el nombre de la materia prima y la cantidad que desea agregar/descontar de la misma.");
+
+        jLExplicacion2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLExplicacion2.setText("Presione \"Buscar\" para filtrar la tabla de stock según un ID o un nombre.");
+
+        jLIdMp.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLIdMp.setLabelFor(jTextIDMp);
+        jLIdMp.setText("ID Materia prima:");
+        jLIdMp.setPreferredSize(new java.awt.Dimension(130, 25));
 
         jLNombreMp.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLNombreMp.setText("Nombre materia prima:");
+        jLNombreMp.setText("Nombre:");
         jLNombreMp.setPreferredSize(new java.awt.Dimension(130, 25));
+
+        jLCantidadMp.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLCantidadMp.setText("Cantidad:");
+        jLCantidadMp.setPreferredSize(new java.awt.Dimension(130, 25));
 
         jTextIDMp.setPreferredSize(new java.awt.Dimension(110, 25));
         jTextIDMp.addActionListener(new java.awt.event.ActionListener() {
@@ -68,46 +95,42 @@ public class Stock extends javax.swing.JFrame {
 
         jTextNombreMp.setPreferredSize(new java.awt.Dimension(110, 25));
 
-        jBAgregar.setText("Agregar");
+        jTextCantidadMp.setPreferredSize(new java.awt.Dimension(110, 25));
 
-        jBCancelar.setText("Cancelar");
-        jBCancelar.addActionListener(new java.awt.event.ActionListener() {
+        jBBuscarMp.setText("Buscar");
+        jBBuscarMp.setPreferredSize(new java.awt.Dimension(80, 27));
+
+        jBAgregarMp.setText("Agregar");
+        jBAgregarMp.setPreferredSize(new java.awt.Dimension(80, 27));
+
+        jBCancelarMp.setText("Cancelar");
+        jBCancelarMp.setPreferredSize(new java.awt.Dimension(80, 27));
+        jBCancelarMp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBCancelarActionPerformed(evt);
+                jBCancelarMpActionPerformed(evt);
             }
         });
 
-        jBDescontar.setText("Descontar");
+        jBDescontarMp.setText("Descontar");
+        jBDescontarMp.setPreferredSize(new java.awt.Dimension(80, 27));
 
-        jLCantidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLCantidad.setText("Cantidad:");
-        jLCantidad.setPreferredSize(new java.awt.Dimension(130, 25));
-
-        jTextCantidad.setPreferredSize(new java.awt.Dimension(110, 25));
-
-        jLExplicacion1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLExplicacion1.setText("Ingrese el ID o el nombre de la materia prima y la cantidad que desea agregar/descontar de la misma.");
-
-        jLExplicacion2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLExplicacion2.setText("Presione \"Buscar\" para filtrar la tabla de stock según un ID o un nombre.");
-
-        jScrollPane.setBackground(new java.awt.Color(255, 255, 204));
-        jScrollPane.setToolTipText("Tabla de stock existente de materias primas");
-        jScrollPane.setName(""); // NOI18N
+        jScrollPaneMp.setBackground(new java.awt.Color(255, 255, 204));
+        jScrollPaneMp.setToolTipText("Tabla de stock existente de materias primas");
+        jScrollPaneMp.setName(""); // NOI18N
 
         jTableMp.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Nombre", "Stock"
+                "ID", "Nombre", "Stock", "Stock crítico"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -119,42 +142,47 @@ public class Stock extends javax.swing.JFrame {
             }
         });
         jTableMp.getTableHeader().setReorderingAllowed(false);
-        jScrollPane.setViewportView(jTableMp);
+        jScrollPaneMp.setViewportView(jTableMp);
 
         javax.swing.GroupLayout jpMpLayout = new javax.swing.GroupLayout(jpMp);
         jpMp.setLayout(jpMpLayout);
         jpMpLayout.setHorizontalGroup(
             jpMpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpMpLayout.createSequentialGroup()
-                .addGroup(jpMpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jpMpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jpMpLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(jpMpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLExplicacion2)
-                            .addComponent(jLExplicacion1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane)))
-                    .addGroup(jpMpLayout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addGroup(jpMpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jpMpLayout.createSequentialGroup()
-                                .addComponent(jLID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextIDMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jpMpLayout.createSequentialGroup()
-                                .addComponent(jLNombreMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextNombreMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jpMpLayout.createSequentialGroup()
-                                .addComponent(jLCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jpMpLayout.createSequentialGroup()
-                                .addComponent(jBAgregar)
-                                .addGap(18, 18, 18)
-                                .addComponent(jBDescontar)
-                                .addGap(18, 18, 18)
-                                .addComponent(jBCancelar)))))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jScrollPaneMp, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpMpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jpMpLayout.createSequentialGroup()
+                            .addGap(37, 37, 37)
+                            .addGroup(jpMpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jpMpLayout.createSequentialGroup()
+                                    .addComponent(jLIdMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jTextIDMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jpMpLayout.createSequentialGroup()
+                                    .addComponent(jLNombreMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jTextNombreMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jpMpLayout.createSequentialGroup()
+                                    .addComponent(jLCantidadMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jTextCantidadMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jpMpLayout.createSequentialGroup()
+                            .addGap(23, 23, 23)
+                            .addGroup(jpMpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jpMpLayout.createSequentialGroup()
+                                    .addComponent(jBBuscarMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jBAgregarMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jBDescontarMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jBCancelarMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLExplicacion2)
+                                .addComponent(jLExplicacion1)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpMpLayout.setVerticalGroup(
             jpMpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,7 +195,7 @@ public class Stock extends javax.swing.JFrame {
                 .addGroup(jpMpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpMpLayout.createSequentialGroup()
                         .addGap(3, 3, 3)
-                        .addComponent(jLID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLIdMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jTextIDMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addGroup(jpMpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,35 +205,181 @@ public class Stock extends javax.swing.JFrame {
                         .addComponent(jTextNombreMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(11, 11, 11)
                 .addGroup(jpMpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLCantidadMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jpMpLayout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addComponent(jTextCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextCantidadMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(27, 27, 27)
-                .addGroup(jpMpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBAgregar)
-                    .addComponent(jBDescontar)
-                    .addComponent(jBCancelar))
+                .addGroup(jpMpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBAgregarMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBBuscarMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBDescontarMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBCancelarMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(jScrollPaneMp, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jScrollPane.getAccessibleContext().setAccessibleName("");
+        jScrollPaneMp.getAccessibleContext().setAccessibleName("");
 
         jTabbedPane.addTab("Materias primas", null, jpMp, "");
 
         jpPt.setPreferredSize(new java.awt.Dimension(640, 480));
 
+        jLExplicacion3.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLExplicacion3.setText("Ingrese el ID o el nombre del prod. terminado y la cantidad que desea agregar/descontar del mismo.");
+
+        jLExplicacion4.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLExplicacion4.setText("Presione \"Buscar\" para filtrar la tabla de stock según un ID o un nombre.");
+
+        jLIdPt.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLIdPt.setLabelFor(jTextIDMp);
+        jLIdPt.setText("ID Prod. terminado:");
+        jLIdPt.setPreferredSize(new java.awt.Dimension(130, 25));
+
+        jLNombrePt.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLNombrePt.setText("Nombre:");
+        jLNombrePt.setPreferredSize(new java.awt.Dimension(130, 25));
+
+        jLCantidadPt.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLCantidadPt.setText("Cantidad:");
+        jLCantidadPt.setPreferredSize(new java.awt.Dimension(130, 25));
+
+        jTextIDPt.setPreferredSize(new java.awt.Dimension(110, 25));
+        jTextIDPt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextIDPtActionPerformed(evt);
+            }
+        });
+
+        jTextNombrePt.setPreferredSize(new java.awt.Dimension(110, 25));
+
+        jTextCantidadPt.setPreferredSize(new java.awt.Dimension(110, 25));
+
+        jBBuscarPt.setText("Buscar");
+        jBBuscarPt.setPreferredSize(new java.awt.Dimension(80, 27));
+
+        jBAgregarPt.setText("Agregar");
+        jBAgregarPt.setPreferredSize(new java.awt.Dimension(80, 27));
+
+        jBCancelarPt.setText("Cancelar");
+        jBCancelarPt.setPreferredSize(new java.awt.Dimension(80, 27));
+        jBCancelarPt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBCancelarPtActionPerformed(evt);
+            }
+        });
+
+        jBDescontarPt.setText("Descontar");
+        jBDescontarPt.setPreferredSize(new java.awt.Dimension(80, 27));
+
+        jScrollPanePt.setBackground(new java.awt.Color(255, 255, 204));
+        jScrollPanePt.setToolTipText("Tabla de stock existente de materias primas");
+        jScrollPanePt.setName(""); // NOI18N
+
+        jTablePt.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Nombre", "Stock", "Stock crítico"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTablePt.getTableHeader().setReorderingAllowed(false);
+        jScrollPanePt.setViewportView(jTablePt);
+
         javax.swing.GroupLayout jpPtLayout = new javax.swing.GroupLayout(jpPt);
         jpPt.setLayout(jpPtLayout);
         jpPtLayout.setHorizontalGroup(
             jpPtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 635, Short.MAX_VALUE)
+            .addGroup(jpPtLayout.createSequentialGroup()
+                .addGroup(jpPtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPtLayout.createSequentialGroup()
+                        .addGroup(jpPtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpPtLayout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addGroup(jpPtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLExplicacion4)
+                                    .addComponent(jLExplicacion3)
+                                    .addGroup(jpPtLayout.createSequentialGroup()
+                                        .addComponent(jBBuscarPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jBAgregarPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jBDescontarPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jBCancelarPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jpPtLayout.createSequentialGroup()
+                                .addGap(37, 37, 37)
+                                .addGroup(jpPtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jpPtLayout.createSequentialGroup()
+                                        .addComponent(jLIdPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTextIDPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jpPtLayout.createSequentialGroup()
+                                        .addComponent(jLNombrePt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTextNombrePt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jpPtLayout.createSequentialGroup()
+                                        .addComponent(jLCantidadPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTextCantidadPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 12, Short.MAX_VALUE))
+                    .addGroup(jpPtLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPanePt)))
+                .addContainerGap())
         );
         jpPtLayout.setVerticalGroup(
             jpPtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 452, Short.MAX_VALUE)
+            .addGroup(jpPtLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLExplicacion3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLExplicacion4)
+                .addGap(18, 18, 18)
+                .addGroup(jpPtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPtLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLIdPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextIDPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(jpPtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLNombrePt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jpPtLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jTextNombrePt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(11, 11, 11)
+                .addGroup(jpPtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLCantidadPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jpPtLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jTextCantidadPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27)
+                .addGroup(jpPtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jBAgregarPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBBuscarPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBDescontarPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBCancelarPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPanePt, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Productos terminados", jpPt);
@@ -229,14 +403,33 @@ public class Stock extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextIDMpActionPerformed
 
-    private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
+    private void jBCancelarMpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarMpActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jBCancelarActionPerformed
+    }//GEN-LAST:event_jBCancelarMpActionPerformed
+
+    private void jTextIDPtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextIDPtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextIDPtActionPerformed
+
+    private void jBCancelarPtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarPtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBCancelarPtActionPerformed
     
     public void mostrarPestanaPt(){
         this.jTabbedPane.setSelectedComponent(jpPt);     //también puede usarse setSelectedIndex(1)
     }
-        
+    
+    private void cargarTabla(){
+        if (jTabbedPane.getSelectedComponent() == jpMp){
+            DefaultTableModel modelo = (DefaultTableModel)jTableMp.getModel();   
+            jTableMp.setModel(gestorMp.traerTablaMpConStock(modelo));
+            
+        }
+       // else
+           // jTablePt.setModel(gestorMp.traerTablaMateriaPrima());
+            
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -267,26 +460,41 @@ public class Stock extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Stock().setVisible(true);
+                new Stock(gestorMp, gestorPt).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBAgregar;
-    private javax.swing.JButton jBCancelar;
-    private javax.swing.JButton jBDescontar;
-    private javax.swing.JLabel jLCantidad;
+    private javax.swing.JButton jBAgregarMp;
+    private javax.swing.JButton jBAgregarPt;
+    private javax.swing.JButton jBBuscarMp;
+    private javax.swing.JButton jBBuscarPt;
+    private javax.swing.JButton jBCancelarMp;
+    private javax.swing.JButton jBCancelarPt;
+    private javax.swing.JButton jBDescontarMp;
+    private javax.swing.JButton jBDescontarPt;
+    private javax.swing.JLabel jLCantidadMp;
+    private javax.swing.JLabel jLCantidadPt;
     private javax.swing.JLabel jLExplicacion1;
     private javax.swing.JLabel jLExplicacion2;
-    private javax.swing.JLabel jLID;
+    private javax.swing.JLabel jLExplicacion3;
+    private javax.swing.JLabel jLExplicacion4;
+    private javax.swing.JLabel jLIdMp;
+    private javax.swing.JLabel jLIdPt;
     private javax.swing.JLabel jLNombreMp;
-    private javax.swing.JScrollPane jScrollPane;
+    private javax.swing.JLabel jLNombrePt;
+    private javax.swing.JScrollPane jScrollPaneMp;
+    private javax.swing.JScrollPane jScrollPanePt;
     private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JTable jTableMp;
-    private javax.swing.JTextField jTextCantidad;
+    private javax.swing.JTable jTablePt;
+    private javax.swing.JTextField jTextCantidadMp;
+    private javax.swing.JTextField jTextCantidadPt;
     private javax.swing.JTextField jTextIDMp;
+    private javax.swing.JTextField jTextIDPt;
     private javax.swing.JTextField jTextNombreMp;
+    private javax.swing.JTextField jTextNombrePt;
     private javax.swing.JPanel jpMp;
     private javax.swing.JPanel jpPt;
     // End of variables declaration//GEN-END:variables

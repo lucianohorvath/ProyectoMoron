@@ -80,7 +80,7 @@ public class ProveedorDAO {
         return lineasAfectadas;
     }
 
-    public static DefaultTableModel leerTablaProveedorYDevolverModelo(DefaultTableModel modelo) {
+    public static DefaultTableModel leerTablaProveedor(DefaultTableModel modelo) {
         Connection con;
         Statement sentencia;
         ResultSet rs;

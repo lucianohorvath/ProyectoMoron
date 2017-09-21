@@ -120,7 +120,8 @@ public class MateriaPrimaDAO {
         try {
             con = Conexion.obtenerConexion();
             st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM Mercaderia WHERE IdMercaderia = " + idMp);
+            ResultSet rs = st.executeQuery("SELECT Descripcion FROM MateriaPrima "
+                    + "WHERE IdMateriaPrima = " + idMp);
             
             if (rs.next()) {
                 pt = new MateriaPrima();
@@ -154,10 +155,9 @@ public class MateriaPrimaDAO {
         modelo.addColumn("Descripción");
         
         try {
-            //Obtenemos la conexion a la base de datos
             con = Conexion.obtenerConexion();
             sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT * FROM MateriaPrima");
+            rs = sentencia.executeQuery("SELECT IdMateriaPrima, Descripcion FROM MateriaPrima");
             
             while (rs.next()) {
                 Object[] fila = new Object[2];
@@ -219,6 +219,38 @@ public class MateriaPrimaDAO {
         }
         return modelo;
     }
+    
+    public static DefaultTableModel traerTablaMpConStock (DefaultTableModel modelo) {
+        Connection con;
+        Statement sentencia;
+        ResultSet rs;
+        
+        try {
+            con = Conexion.obtenerConexion();
+            sentencia = con.createStatement();
+            rs = sentencia.executeQuery("SELECT * FROM MateriaPrima");
+            
+            while (rs.next()) {
+                Object[] fila = new Object[6];
+                fila[0] = rs.getInt("IdMateriaPrima");
+                fila[1] = rs.getNString("Descripcion");
+                fila[2] = rs.getInt("Stock");
+                fila[3] = rs.getInt("StockCritico");
+                modelo.addRow(fila);
+            }
+            
+            rs.close();
+            sentencia.close();
+            con.close();
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Error en el driver. " + ex.getMessage());
+        } catch (SQLException ex) {
+            System.out.println("Error en la consulta. " + ex.getMessage());
+        }
+        return modelo;
+    }
+    
+    
     
     
 }

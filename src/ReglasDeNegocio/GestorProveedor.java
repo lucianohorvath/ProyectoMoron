@@ -85,7 +85,7 @@ public class GestorProveedor {
     }
 
     public DefaultTableModel leerTablaProveedorYDevolverModelo(DefaultTableModel modelo) {
-        return ProveedorDAO.leerTablaProveedorYDevolverModelo(modelo);
+        return ProveedorDAO.leerTablaProveedor(modelo);
     }
     
 }

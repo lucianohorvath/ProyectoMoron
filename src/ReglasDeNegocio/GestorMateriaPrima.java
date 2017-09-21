@@ -47,4 +47,8 @@ public class GestorMateriaPrima {
         return MateriaPrimaDAO.traerTablaMateriaPrima(idProveedor);
     } 
     
+    public DefaultTableModel traerTablaMpConStock(DefaultTableModel modelo){
+        return MateriaPrimaDAO.traerTablaMpConStock(modelo);
+    }
+    
 }

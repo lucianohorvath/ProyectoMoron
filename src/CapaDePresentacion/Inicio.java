@@ -359,13 +359,13 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jItemPtBajaActionPerformed
 
     private void jItemStockPtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemStockPtActionPerformed
-        Stock st = new Stock();
+        Stock st = new Stock(gestorMp, gestorPt);
         st.mostrarPestanaPt();
         st.setVisible(true);
     }//GEN-LAST:event_jItemStockPtActionPerformed
 
     private void jItemStockMpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemStockMpActionPerformed
-        Stock st = new Stock();
+        Stock st = new Stock(gestorMp, gestorPt);
         st.setVisible(true);
     }//GEN-LAST:event_jItemStockMpActionPerformed
 
