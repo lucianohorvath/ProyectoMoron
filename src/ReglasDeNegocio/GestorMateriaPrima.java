@@ -14,12 +14,10 @@ public class GestorMateriaPrima {
         String descripcion = mp.getDescripcion();
         int stockCritico = mp.getStockCritico();        
         String[] listaProv = proveedores.split(", ");
-        int[] prov = new int[listaProv.length];
+        int[] listaProveedores = new int[listaProv.length];
         
         for (int i=0; i < listaProv.length; i++)
-            prov[i] = Integer.parseInt(listaProv[i]);
-        
-        int[] listaProveedores = mp.getListaProveedores();
+            listaProveedores[i] = Integer.parseInt(listaProv[i]);        
         
         return (MateriaPrimaDAO.altaMateriaPrima(descripcion, stockCritico, listaProveedores));
     }
@@ -39,6 +37,10 @@ public class GestorMateriaPrima {
         return (MateriaPrimaDAO.traerMp(idMp));
     }
     
+    public MateriaPrima traerMp(String nombre){
+        return (MateriaPrimaDAO.traerMp(nombre));
+    }
+    
     public DefaultTableModel traerTablaMateriaPrima(){
         return MateriaPrimaDAO.traerTablaMateriaPrima();
     } 
@@ -51,4 +53,19 @@ public class GestorMateriaPrima {
         return MateriaPrimaDAO.traerTablaMpConStock(modelo);
     }
     
+    public DefaultTableModel traerTablaMpConStock(DefaultTableModel modelo, String idMp, String nombre){
+        int id = 0;
+        
+        if (idMp.isEmpty())
+            id = traerMp(nombre).getId();
+        else
+            id = Integer.parseInt(idMp);
+        
+        return MateriaPrimaDAO.traerTablaMpConStock(modelo, id);
+    }
+    
+    public int modificarStock(int idMp, int cantidad){
+        return MateriaPrimaDAO.modificarStock(idMp, cantidad);
+    }
+
 }

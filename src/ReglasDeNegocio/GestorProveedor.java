@@ -4,7 +4,6 @@ import Modelo.Proveedor;
 import CapaDeDatos.ProveedorDAO;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 public class GestorProveedor {
 

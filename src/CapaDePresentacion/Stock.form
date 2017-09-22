@@ -74,7 +74,7 @@
                                       <Group type="102" attributes="0">
                                           <Component id="jLIdMp" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                                          <Component id="jTextIDMp" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jTextIdMp" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" attributes="0">
                                           <Component id="jLNombreMp" min="-2" max="-2" attributes="0"/>
@@ -123,7 +123,7 @@
                               <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
                               <Component id="jLIdMp" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jTextIDMp" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextIdMp" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="11" pref="11" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -178,7 +178,7 @@
                   <Font name="Tahoma" size="12" style="0"/>
                 </Property>
                 <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="jTextIDMp"/>
+                  <ComponentRef name="jTextIdMp"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="ID Materia prima:"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -208,14 +208,14 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextIDMp">
+            <Component class="javax.swing.JTextField" name="jTextIdMp">
               <Properties>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[110, 25]"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextIDMpActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextIdMpActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextNombreMp">
@@ -224,6 +224,9 @@
                   <Dimension value="[110, 25]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextNombreMpActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextCantidadMp">
               <Properties>
@@ -231,28 +234,37 @@
                   <Dimension value="[110, 25]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextCantidadMpActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jBBuscarMp">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Buscar"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[80, 27]"/>
+                  <Dimension value="[90, 27]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBBuscarMpActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jBAgregarMp">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Agregar"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[80, 27]"/>
+                  <Dimension value="[90, 27]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBAgregarMpActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jBCancelarMp">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cancelar"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[80, 27]"/>
+                  <Dimension value="[90, 27]"/>
                 </Property>
               </Properties>
               <Events>
@@ -263,9 +275,12 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Descontar"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[80, 27]"/>
+                  <Dimension value="[90, 27]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBDescontarMpActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPaneMp">
               <Properties>
@@ -367,7 +382,7 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLIdPt" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                                              <Component id="jTextIDPt" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jTextIdPt" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLNombrePt" min="-2" max="-2" attributes="0"/>
@@ -406,7 +421,7 @@
                               <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
                               <Component id="jLIdPt" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jTextIDPt" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextIdPt" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="11" pref="11" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -463,7 +478,7 @@
                   <Font name="Tahoma" size="12" style="0"/>
                 </Property>
                 <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="jTextIDMp"/>
+                  <ComponentRef name="jTextIdMp"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="ID Prod. terminado:"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -493,14 +508,14 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextIDPt">
+            <Component class="javax.swing.JTextField" name="jTextIdPt">
               <Properties>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[110, 25]"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextIDPtActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextIdPtActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextNombrePt">
@@ -509,6 +524,9 @@
                   <Dimension value="[110, 25]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextNombrePtActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextCantidadPt">
               <Properties>
@@ -516,28 +534,37 @@
                   <Dimension value="[110, 25]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextCantidadPtActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jBBuscarPt">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Buscar"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[80, 27]"/>
+                  <Dimension value="[90, 27]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBBuscarPtActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jBAgregarPt">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Agregar"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[80, 27]"/>
+                  <Dimension value="[90, 27]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBAgregarPtActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jBCancelarPt">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cancelar"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[80, 27]"/>
+                  <Dimension value="[90, 27]"/>
                 </Property>
               </Properties>
               <Events>
@@ -548,9 +575,12 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Descontar"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[80, 27]"/>
+                  <Dimension value="[90, 27]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBDescontarPtActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPanePt">
               <Properties>

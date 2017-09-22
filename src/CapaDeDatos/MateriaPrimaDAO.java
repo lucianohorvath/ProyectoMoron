@@ -69,7 +69,7 @@ public class MateriaPrimaDAO {
             Statement sentencia = con.createStatement();
             
             lineasAfectadas = sentencia.executeUpdate("DELETE FROM MateriaPrima"
-                    + " WHERE IdMercaderia = " + idMp);
+                    + " WHERE IdMateriaPrima = " + idMp);
             con.close();            
         }
         catch(SQLException ex){
@@ -127,8 +127,13 @@ public class MateriaPrimaDAO {
                 pt = new MateriaPrima();
                 
                 pt.setId(idMp);
-                pt.setDescripcion(rs.getNString("Descripcion"));
-            } 
+                pt.setDescripcion(rs.getNString("Descripcion"));                
+                pt.setStock(rs.getInt("Stock"));
+                pt.setStockCritico(rs.getInt("StockCritico"));              
+            }
+            else
+                pt.setId(-1);       //bandera que representa que no se encontraron registros.
+            
             st.close();
             con.close();
             
@@ -139,6 +144,38 @@ public class MateriaPrimaDAO {
         }
         return pt;
     }
+        
+    public static MateriaPrima traerMp(String descripcion) {
+        MateriaPrima pt = new MateriaPrima();
+        Connection con;
+        Statement st;
+        
+        try {
+            con = Conexion.obtenerConexion();
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM MateriaPrima "
+                    + "WHERE Descripcion = '" + descripcion + "'");
+            
+            if (rs.next()) {
+                pt.setId(rs.getInt("IdMateriaPrima"));
+                pt.setDescripcion(descripcion);
+                pt.setStock(rs.getInt("Stock"));
+                pt.setStockCritico(rs.getInt("StockCritico"));                
+            }
+            else
+                pt.setId(-1);       //bandera que representa que no se encontraron registros.
+                
+            st.close();
+            con.close();
+            
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error en el driver. " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error en la consulta. " + e.getMessage());
+        }
+        return pt;
+    }
+    
     
     /**Lee la tabla MateriaPrima de la base de datos y trae todos los registros en un 
      * DefaultTableModel.
@@ -157,7 +194,8 @@ public class MateriaPrimaDAO {
         try {
             con = Conexion.obtenerConexion();
             sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT IdMateriaPrima, Descripcion FROM MateriaPrima");
+            rs = sentencia.executeQuery("SELECT IdMateriaPrima, Descripcion FROM MateriaPrima "
+                    + "ORDER BY IdMateriaPrima");
             
             while (rs.next()) {
                 Object[] fila = new Object[2];
@@ -224,11 +262,12 @@ public class MateriaPrimaDAO {
         Connection con;
         Statement sentencia;
         ResultSet rs;
+        modelo.setRowCount(0); 
         
         try {
             con = Conexion.obtenerConexion();
             sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT * FROM MateriaPrima");
+            rs = sentencia.executeQuery("SELECT * FROM MateriaPrima ORDER BY IdMateriaPrima");
             
             while (rs.next()) {
                 Object[] fila = new Object[6];
@@ -250,7 +289,64 @@ public class MateriaPrimaDAO {
         return modelo;
     }
     
+    public static DefaultTableModel traerTablaMpConStock(DefaultTableModel modelo, int idMp) {
+        Connection con;
+        Statement sentencia;
+        ResultSet rs;
+        modelo.setRowCount(0);
+        System.out.println("Buscando materia prima...");
+        
+        try {
+            con = Conexion.obtenerConexion();
+            sentencia = con.createStatement();
+            rs = sentencia.executeQuery("SELECT * FROM MateriaPrima WHERE IdMateriaPrima = " + idMp);
+            
+            while (rs.next()) {
+                Object[] fila = new Object[6];
+                fila[0] = rs.getInt("IdMateriaPrima");
+                fila[1] = rs.getNString("Descripcion");
+                fila[2] = rs.getInt("Stock");
+                fila[3] = rs.getInt("StockCritico");
+                modelo.addRow(fila);
+            }
+            
+            rs.close();
+            sentencia.close();
+            con.close();
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Error en el driver. " + ex.getMessage());
+        } catch (SQLException ex) {
+            System.out.println("Error en la consulta. " + ex.getMessage());
+        }
+        return modelo; 
+    }
     
     
-    
+    public static int modificarStock(int idMp, int cantidad){
+        int lineasAfectadas = 0;
+        Connection con;   
+        
+        try {
+            con = Conexion.obtenerConexion();
+
+            PreparedStatement ps = con.prepareStatement("UPDATE MateriaPrima SET Stock = "
+                    + "Stock + ? WHERE IdMateriaPrima = ?");
+
+            ps.setInt(1, cantidad);
+            ps.setInt(2, idMp);
+
+            lineasAfectadas = ps.executeUpdate();
+            con.close();
+        }
+        
+        catch(SQLException ex){
+            System.out.println("Error en la consulta. " + ex.getMessage());
+        }
+        catch (ClassNotFoundException ex) {
+            System.out.println("Error en el driver. " + ex.getMessage());
+        }
+        
+        return lineasAfectadas;
+    }
+
 }

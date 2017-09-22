@@ -26,8 +26,31 @@ public class GestorProductoTerminado {
         return (ProductoTerminadoDAO.traerPt(idPt));
     }
     
-    public DefaultTableModel leerTablaProdTerminados(DefaultTableModel modelo){
+    public ProductoTerminado traerPt(String nombre){
+        return (ProductoTerminadoDAO.traerPt(nombre));
+    }
+    
+    public DefaultTableModel traerTabla(DefaultTableModel modelo){
         return ProductoTerminadoDAO.leerTablaProdTerminados(modelo);
+    }
+    
+    public DefaultTableModel traerTablaPtConStock(DefaultTableModel modelo){
+        return ProductoTerminadoDAO.traerTablaPtConStock(modelo);
+    }
+    
+    public DefaultTableModel traerTablaPtConStock(DefaultTableModel modelo, String idPt, String nombre){
+        int id;
+        
+        if (idPt.isEmpty())
+            id = traerPt(nombre).getId(); 
+        else
+            id = Integer.parseInt(idPt);        
+        
+        return ProductoTerminadoDAO.traerTablaPtConStock(modelo, id);
+    }
+     
+    public int modificarStock(int idMp, int cantidad){
+        return ProductoTerminadoDAO.modificarStock(idMp, cantidad);
     }
     
 }

@@ -27,10 +27,13 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanelBotonesSuperpuestos" min="-2" pref="227" max="-2" attributes="0"/>
-                  <Component id="jPanelDatos" min="-2" pref="239" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="jPanelBotonesSuperpuestos" min="-2" pref="227" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="jPanelDatos" pref="255" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="27" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -61,35 +64,35 @@
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLRazonSocial" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
-                              <Component id="jLID" min="-2" pref="85" max="-2" attributes="0"/>
+                              <Component id="jLRazonSocial" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLID" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jTextId" alignment="0" pref="100" max="32767" attributes="0"/>
+                              <Component id="jTextId" alignment="0" max="32767" attributes="0"/>
                               <Component id="jTextRazonSocial" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLDireccion" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
-                              <Component id="jLEmail" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
-                              <Component id="jLTelefono" min="-2" pref="85" max="-2" attributes="0"/>
+                              <Component id="jLDireccion" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLEmail" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLTelefono" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jTextDireccion" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
-                              <Component id="jTextEmail" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
-                              <Component id="jTextTelefono" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="jTextDireccion" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jTextEmail" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jTextTelefono" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Component id="jLCuit" min="-2" pref="85" max="-2" attributes="0"/>
+                          <Component id="jLCuit" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jTextCuit" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="36" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -99,32 +102,32 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jTextId" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLID" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="jLID" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLRazonSocial" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="jLRazonSocial" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextRazonSocial" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLCuit" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="jLCuit" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextCuit" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLDireccion" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="jLDireccion" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextDireccion" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLTelefono" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="jLTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jTextEmail" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLEmail" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="jLEmail" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="17" max="32767" attributes="0"/>
               </Group>
@@ -136,13 +139,16 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="ID Proveedor:"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[70, 20]"/>
+              <Dimension value="[95, 20]"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextId">
           <Properties>
             <Property name="enabled" type="boolean" value="false"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[130, 27]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextIdActionPerformed"/>
@@ -152,11 +158,16 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Raz&#xf3;n Social:"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[85, 20]"/>
+              <Dimension value="[95, 20]"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextRazonSocial">
+          <Properties>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[130, 27]"/>
+            </Property>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextRazonSocialActionPerformed"/>
           </Events>
@@ -165,7 +176,7 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="CUIT:"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[85, 20]"/>
+              <Dimension value="[95, 20]"/>
             </Property>
           </Properties>
         </Component>
@@ -175,6 +186,9 @@
               <Format format="##-########-#" subtype="-1" type="5"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="S&#xf3;lo se permiten valores num&#xe9;ricos."/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[130, 27]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextCuitActionPerformed"/>
@@ -184,11 +198,16 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Direcci&#xf3;n:"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[85, 20]"/>
+              <Dimension value="[95, 20]"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextDireccion">
+          <Properties>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[130, 27]"/>
+            </Property>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextDireccionActionPerformed"/>
           </Events>
@@ -197,11 +216,16 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Tel&#xe9;fono:"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[85, 20]"/>
+              <Dimension value="[95, 20]"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextTelefono">
+          <Properties>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[130, 27]"/>
+            </Property>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextTelefonoActionPerformed"/>
           </Events>
@@ -210,11 +234,16 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="E-Mail:"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[85, 20]"/>
+              <Dimension value="[95, 20]"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextEmail">
+          <Properties>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[130, 27]"/>
+            </Property>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextEmailActionPerformed"/>
           </Events>
@@ -232,13 +261,19 @@
             <Property name="text" type="java.lang.String" value="Dar de alta"/>
             <Property name="alignmentY" type="float" value="0.0"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[90, 27]"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[100, 27]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBAltaActionPerformed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="0" y="10" width="95" height="-1"/>
+              <AbsoluteConstraints x="0" y="10" width="100" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -247,13 +282,19 @@
             <Property name="text" type="java.lang.String" value="Modificar"/>
             <Property name="alignmentY" type="float" value="0.0"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[90, 27]"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[100, 27]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBModificarActionPerformed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="0" y="10" width="95" height="-1"/>
+              <AbsoluteConstraints x="0" y="10" width="100" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -262,26 +303,38 @@
             <Property name="text" type="java.lang.String" value="Dar de baja"/>
             <Property name="alignmentY" type="float" value="0.0"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[90, 27]"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[100, 27]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBBajaActionPerformed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="0" y="10" width="95" height="-1"/>
+              <AbsoluteConstraints x="0" y="10" width="100" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JButton" name="jBCancelar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[90, 27]"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[100, 27]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBCancelarActionPerformed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="125" y="10" width="90" height="-1"/>
+              <AbsoluteConstraints x="125" y="10" width="100" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>

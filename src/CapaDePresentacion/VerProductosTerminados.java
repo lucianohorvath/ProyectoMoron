@@ -158,7 +158,7 @@ public class VerProductosTerminados extends JFrame {
         System.out.println ("Cargando la tabla de productos terminados...");
         DefaultTableModel modelo = (DefaultTableModel)jTablaProdTerminados.getModel();
         
-        jTablaProdTerminados.setModel(gestor.leerTablaProdTerminados(modelo));
+        jTablaProdTerminados.setModel(gestor.traerTabla(modelo));
     };
        
     

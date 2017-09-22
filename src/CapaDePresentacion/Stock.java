@@ -2,6 +2,7 @@ package CapaDePresentacion;
 
 import ReglasDeNegocio.GestorMateriaPrima;
 import ReglasDeNegocio.GestorProductoTerminado;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -35,7 +36,7 @@ public class Stock extends javax.swing.JFrame {
         jLIdMp = new javax.swing.JLabel();
         jLNombreMp = new javax.swing.JLabel();
         jLCantidadMp = new javax.swing.JLabel();
-        jTextIDMp = new javax.swing.JTextField();
+        jTextIdMp = new javax.swing.JTextField();
         jTextNombreMp = new javax.swing.JTextField();
         jTextCantidadMp = new javax.swing.JTextField();
         jBBuscarMp = new javax.swing.JButton();
@@ -50,7 +51,7 @@ public class Stock extends javax.swing.JFrame {
         jLIdPt = new javax.swing.JLabel();
         jLNombrePt = new javax.swing.JLabel();
         jLCantidadPt = new javax.swing.JLabel();
-        jTextIDPt = new javax.swing.JTextField();
+        jTextIdPt = new javax.swing.JTextField();
         jTextNombrePt = new javax.swing.JTextField();
         jTextCantidadPt = new javax.swing.JTextField();
         jBBuscarPt = new javax.swing.JButton();
@@ -74,7 +75,7 @@ public class Stock extends javax.swing.JFrame {
         jLExplicacion2.setText("Presione \"Buscar\" para filtrar la tabla de stock según un ID o un nombre.");
 
         jLIdMp.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLIdMp.setLabelFor(jTextIDMp);
+        jLIdMp.setLabelFor(jTextIdMp);
         jLIdMp.setText("ID Materia prima:");
         jLIdMp.setPreferredSize(new java.awt.Dimension(130, 25));
 
@@ -86,25 +87,45 @@ public class Stock extends javax.swing.JFrame {
         jLCantidadMp.setText("Cantidad:");
         jLCantidadMp.setPreferredSize(new java.awt.Dimension(130, 25));
 
-        jTextIDMp.setPreferredSize(new java.awt.Dimension(110, 25));
-        jTextIDMp.addActionListener(new java.awt.event.ActionListener() {
+        jTextIdMp.setPreferredSize(new java.awt.Dimension(110, 25));
+        jTextIdMp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextIDMpActionPerformed(evt);
+                jTextIdMpActionPerformed(evt);
             }
         });
 
         jTextNombreMp.setPreferredSize(new java.awt.Dimension(110, 25));
+        jTextNombreMp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextNombreMpActionPerformed(evt);
+            }
+        });
 
         jTextCantidadMp.setPreferredSize(new java.awt.Dimension(110, 25));
+        jTextCantidadMp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextCantidadMpActionPerformed(evt);
+            }
+        });
 
         jBBuscarMp.setText("Buscar");
-        jBBuscarMp.setPreferredSize(new java.awt.Dimension(80, 27));
+        jBBuscarMp.setPreferredSize(new java.awt.Dimension(90, 27));
+        jBBuscarMp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBuscarMpActionPerformed(evt);
+            }
+        });
 
         jBAgregarMp.setText("Agregar");
-        jBAgregarMp.setPreferredSize(new java.awt.Dimension(80, 27));
+        jBAgregarMp.setPreferredSize(new java.awt.Dimension(90, 27));
+        jBAgregarMp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAgregarMpActionPerformed(evt);
+            }
+        });
 
         jBCancelarMp.setText("Cancelar");
-        jBCancelarMp.setPreferredSize(new java.awt.Dimension(80, 27));
+        jBCancelarMp.setPreferredSize(new java.awt.Dimension(90, 27));
         jBCancelarMp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBCancelarMpActionPerformed(evt);
@@ -112,7 +133,12 @@ public class Stock extends javax.swing.JFrame {
         });
 
         jBDescontarMp.setText("Descontar");
-        jBDescontarMp.setPreferredSize(new java.awt.Dimension(80, 27));
+        jBDescontarMp.setPreferredSize(new java.awt.Dimension(90, 27));
+        jBDescontarMp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBDescontarMpActionPerformed(evt);
+            }
+        });
 
         jScrollPaneMp.setBackground(new java.awt.Color(255, 255, 204));
         jScrollPaneMp.setToolTipText("Tabla de stock existente de materias primas");
@@ -160,7 +186,7 @@ public class Stock extends javax.swing.JFrame {
                                 .addGroup(jpMpLayout.createSequentialGroup()
                                     .addComponent(jLIdMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
-                                    .addComponent(jTextIDMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextIdMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jpMpLayout.createSequentialGroup()
                                     .addComponent(jLNombreMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
@@ -196,7 +222,7 @@ public class Stock extends javax.swing.JFrame {
                     .addGroup(jpMpLayout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLIdMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextIDMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextIdMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addGroup(jpMpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLNombreMp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -233,7 +259,7 @@ public class Stock extends javax.swing.JFrame {
         jLExplicacion4.setText("Presione \"Buscar\" para filtrar la tabla de stock según un ID o un nombre.");
 
         jLIdPt.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLIdPt.setLabelFor(jTextIDMp);
+        jLIdPt.setLabelFor(jTextIdMp);
         jLIdPt.setText("ID Prod. terminado:");
         jLIdPt.setPreferredSize(new java.awt.Dimension(130, 25));
 
@@ -245,25 +271,45 @@ public class Stock extends javax.swing.JFrame {
         jLCantidadPt.setText("Cantidad:");
         jLCantidadPt.setPreferredSize(new java.awt.Dimension(130, 25));
 
-        jTextIDPt.setPreferredSize(new java.awt.Dimension(110, 25));
-        jTextIDPt.addActionListener(new java.awt.event.ActionListener() {
+        jTextIdPt.setPreferredSize(new java.awt.Dimension(110, 25));
+        jTextIdPt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextIDPtActionPerformed(evt);
+                jTextIdPtActionPerformed(evt);
             }
         });
 
         jTextNombrePt.setPreferredSize(new java.awt.Dimension(110, 25));
+        jTextNombrePt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextNombrePtActionPerformed(evt);
+            }
+        });
 
         jTextCantidadPt.setPreferredSize(new java.awt.Dimension(110, 25));
+        jTextCantidadPt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextCantidadPtActionPerformed(evt);
+            }
+        });
 
         jBBuscarPt.setText("Buscar");
-        jBBuscarPt.setPreferredSize(new java.awt.Dimension(80, 27));
+        jBBuscarPt.setPreferredSize(new java.awt.Dimension(90, 27));
+        jBBuscarPt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBuscarPtActionPerformed(evt);
+            }
+        });
 
         jBAgregarPt.setText("Agregar");
-        jBAgregarPt.setPreferredSize(new java.awt.Dimension(80, 27));
+        jBAgregarPt.setPreferredSize(new java.awt.Dimension(90, 27));
+        jBAgregarPt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAgregarPtActionPerformed(evt);
+            }
+        });
 
         jBCancelarPt.setText("Cancelar");
-        jBCancelarPt.setPreferredSize(new java.awt.Dimension(80, 27));
+        jBCancelarPt.setPreferredSize(new java.awt.Dimension(90, 27));
         jBCancelarPt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBCancelarPtActionPerformed(evt);
@@ -271,7 +317,12 @@ public class Stock extends javax.swing.JFrame {
         });
 
         jBDescontarPt.setText("Descontar");
-        jBDescontarPt.setPreferredSize(new java.awt.Dimension(80, 27));
+        jBDescontarPt.setPreferredSize(new java.awt.Dimension(90, 27));
+        jBDescontarPt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBDescontarPtActionPerformed(evt);
+            }
+        });
 
         jScrollPanePt.setBackground(new java.awt.Color(255, 255, 204));
         jScrollPanePt.setToolTipText("Tabla de stock existente de materias primas");
@@ -330,7 +381,7 @@ public class Stock extends javax.swing.JFrame {
                                     .addGroup(jpPtLayout.createSequentialGroup()
                                         .addComponent(jLIdPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jTextIDPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jTextIdPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jpPtLayout.createSequentialGroup()
                                         .addComponent(jLNombrePt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -357,7 +408,7 @@ public class Stock extends javax.swing.JFrame {
                     .addGroup(jpPtLayout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLIdPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextIDPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextIdPt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addGroup(jpPtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLNombrePt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -399,36 +450,134 @@ public class Stock extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextIDMpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextIDMpActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextIDMpActionPerformed
+    private void jTextIdMpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextIdMpActionPerformed
+        jBBuscarMpActionPerformed(evt);
+    }//GEN-LAST:event_jTextIdMpActionPerformed
 
     private void jBCancelarMpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarMpActionPerformed
         this.dispose();
     }//GEN-LAST:event_jBCancelarMpActionPerformed
 
-    private void jTextIDPtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextIDPtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextIDPtActionPerformed
+    private void jTextIdPtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextIdPtActionPerformed
+        jBBuscarPtActionPerformed(evt);
+    }//GEN-LAST:event_jTextIdPtActionPerformed
 
     private void jBCancelarPtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarPtActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jBCancelarPtActionPerformed
+
+    private void jBAgregarMpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarMpActionPerformed
+        modificarStock(1,1);
+    }//GEN-LAST:event_jBAgregarMpActionPerformed
+
+    private void jBDescontarPtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDescontarPtActionPerformed
+        modificarStock(-1,2);
+    }//GEN-LAST:event_jBDescontarPtActionPerformed
+
+    private void jBBuscarMpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarMpActionPerformed
+        if (jTextIdMp.getText().isEmpty() && jTextNombreMp.getText().isEmpty())
+            cargarTabla();
+        else
+            cargarTabla(jTextIdMp.getText(), jTextNombreMp.getText());
+    }//GEN-LAST:event_jBBuscarMpActionPerformed
+
+    private void jBBuscarPtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarPtActionPerformed
+        if (jTextIdPt.getText().isEmpty() && jTextNombrePt.getText().isEmpty()) 
+            cargarTabla();
+        else            
+            cargarTabla(jTextIdPt.getText(), jTextNombrePt.getText());
+    }//GEN-LAST:event_jBBuscarPtActionPerformed
+
+    private void jTextNombreMpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNombreMpActionPerformed
+        jBBuscarMpActionPerformed(evt);
+    }//GEN-LAST:event_jTextNombreMpActionPerformed
+
+    private void jTextNombrePtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNombrePtActionPerformed
+        jBBuscarPtActionPerformed(evt);
+    }//GEN-LAST:event_jTextNombrePtActionPerformed
+
+    private void jTextCantidadPtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCantidadPtActionPerformed
+        jBAgregarPtActionPerformed(evt);
+    }//GEN-LAST:event_jTextCantidadPtActionPerformed
+
+    private void jTextCantidadMpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCantidadMpActionPerformed
+        jBAgregarMpActionPerformed(evt);
+    }//GEN-LAST:event_jTextCantidadMpActionPerformed
+
+    private void jBAgregarPtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarPtActionPerformed
+        modificarStock(1,2);
+    }//GEN-LAST:event_jBAgregarPtActionPerformed
+
+    private void jBDescontarMpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDescontarMpActionPerformed
+        modificarStock(-1,1);
+    }//GEN-LAST:event_jBDescontarMpActionPerformed
     
     public void mostrarPestanaPt(){
         this.jTabbedPane.setSelectedComponent(jpPt);     //también puede usarse setSelectedIndex(1)
+        cargarTabla();
     }
-    
+        
+    /**Carga la tabla completa en la pestaña actual (Materia prima o producto terminado).
+     * 
+     */
     private void cargarTabla(){
         if (jTabbedPane.getSelectedComponent() == jpMp){
             DefaultTableModel modelo = (DefaultTableModel)jTableMp.getModel();   
-            jTableMp.setModel(gestorMp.traerTablaMpConStock(modelo));
-            
+            jTableMp.setModel(gestorMp.traerTablaMpConStock(modelo));            
         }
-       // else
-           // jTablePt.setModel(gestorMp.traerTablaMateriaPrima());
-            
+        else{
+            DefaultTableModel modelo = (DefaultTableModel)jTablePt.getModel(); 
+            jTablePt.setModel(gestorPt.traerTablaPtConStock(modelo));           
+        }    
     }
+    
+    /**Carga la tabla en la pestaña actual con los parámetros coincidentes, al menos uno de ellos.
+     * 
+     * @param id el id del Producto (MP/PT) que se desea ver.
+     * @param nombre el nombre del Producto (MP/PT) que se desea ver.
+     */
+    private void cargarTabla(String id, String nombre){
+        if (jTabbedPane.getSelectedComponent() == jpMp){
+            DefaultTableModel modelo = (DefaultTableModel)jTableMp.getModel();   
+            jTableMp.setModel(gestorMp.traerTablaMpConStock(modelo, id, nombre));            
+        }
+        else{
+            DefaultTableModel modelo = (DefaultTableModel)jTablePt.getModel(); 
+            jTablePt.setModel(gestorPt.traerTablaPtConStock(modelo, id, nombre));
+        }        
+    }
+    
+    /**Agrega o descuenta stock según corresponda.
+     * 
+     * @param operacion 1 para agregar, -1 para descontar.
+     * @param tipoProducto 1 para materia prima, 2 para para producto terminado.
+     */
+    private void modificarStock(int operacion, int tipoProducto){
+        String mensaje;
+        
+        if (tipoProducto == 1){        
+            int idMp = Integer.parseInt(jTextIdMp.getText());
+            int cantidad = operacion * Integer.parseInt(jTextCantidadMp.getText());
+
+            if (gestorMp.modificarStock(idMp, cantidad) == 1)
+                mensaje = "El stock se modificó con éxito.";
+            else
+                mensaje = "No se pudo modificar el stock.";
+        }
+        else{
+            int idPt = Integer.parseInt(jTextIdPt.getText());
+            int cantidad = operacion * Integer.parseInt(jTextCantidadPt.getText());
+
+            if (gestorPt.modificarStock(idPt, cantidad) == 1)
+                mensaje = "El stock se modificó con éxito.";
+            else
+                mensaje = "No se pudo modificar el stock.";            
+        }
+                        
+        cargarTabla();
+        System.out.println(mensaje);
+        JOptionPane.showMessageDialog(this, mensaje);    
+    }    
     
     /**
      * @param args the command line arguments
@@ -491,8 +640,8 @@ public class Stock extends javax.swing.JFrame {
     private javax.swing.JTable jTablePt;
     private javax.swing.JTextField jTextCantidadMp;
     private javax.swing.JTextField jTextCantidadPt;
-    private javax.swing.JTextField jTextIDMp;
-    private javax.swing.JTextField jTextIDPt;
+    private javax.swing.JTextField jTextIdMp;
+    private javax.swing.JTextField jTextIdPt;
     private javax.swing.JTextField jTextNombreMp;
     private javax.swing.JTextField jTextNombrePt;
     private javax.swing.JPanel jpMp;
